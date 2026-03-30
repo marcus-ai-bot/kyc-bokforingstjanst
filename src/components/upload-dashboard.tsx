@@ -12,6 +12,7 @@ import {
 } from "@/lib/kyc";
 import { normaliseraOrgnr } from "@/lib/orgnr";
 import { type ScbCompany } from "@/lib/scb-types";
+import { EditableReport } from "@/components/editable-report";
 
 interface BatchCompany {
   organisationsnummer: string;
@@ -487,7 +488,7 @@ export function UploadDashboard() {
       </section>
 
       {orgnrReport ? (
-        <ReportPreview
+        <EditableReport
           report={orgnrReport}
           pdfHref={`/api/pdf/${encodeURIComponent(orgnrReport.organisationsnummer)}`}
           docxHref={`/api/docx/${encodeURIComponent(orgnrReport.organisationsnummer)}`}
