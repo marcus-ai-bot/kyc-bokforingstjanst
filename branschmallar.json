@@ -1,0 +1,240 @@
+[
+  {
+    "namn": "Frisersalonger",
+    "sni_label": "SNI 96.021 – Hårvård",
+    "samlad_risk": "Förhöjd risk",
+    "sni_kod": "96.021",
+    "fragor": {
+      "1_riskfaktorer_verksamhet": "Frisörbranschen är identifierad av Bolagsverket och Skatteverket som en riskbransch för ekonomisk brottslighet. Hög andel kontanthantering, svartarbete och personalfusk förekommer. Branschen har obligatoriskt personalliggarsystem sedan 2007. Sannolikhet: Medel–Hög. Konsekvens: Medel – byrån kan omedvetet hantera felaktiga underlag.",
+      "2_ekonomiska_riskfaktorer": "Ofta oregelbundna intäktsmönster, ibland oklara gränser mellan privat och företag. Många enskilda firmor med blandad ekonomi. Låga marginaler kan skapa incitament för att undanhålla intäkter. Kontantintensiv verksamhet försvårar spårbarhet. Sannolikhet: Medel. Konsekvens: Medel – risk för felaktig redovisning av omsättning.",
+      "3_syfte_och_art": "Kunden anlitar byrån för löpande bokföring, momsredovisning, deklaration och eventuellt lönehantering. Kundrelationen förväntas vara löpande med månatlig leverans. Tjänstleveransen är normalt standardiserad med månatlig bokföring, kvartals- eller årsdeklaration.",
+      "4_behorig_person": "Byrån säkerställer behörighet genom att vid kundupptag identifiera firmatecknare/ägare via legitimation och registreringsbevis. Löpande kommunikation sker via identifierad e-post och telefon. Fullmakter kontrolleras vid behov.",
+      "5_distributionskanaler": "Kommunikation sker normalt digitalt via e-post och bokföringsprogram. Fysisk kontakt sker vid behov. Risken med digital leverans bedöms som låg givet att identifiering skett. Sannolikhet: Låg. Konsekvens: Låg.",
+      "6_motivering_riskniva": "Frisörbranschen placeras på förhöjd risknivå primärt på grund av kontanthantering och branschens generella riskklassificering hos Skatteverket. Byrån hanterar risken genom att granska kassarapporter, kontrollera personalliggare och vara uppmärksam på avvikande intäktsmönster. Så länge kunden använder certifierat kassaregister och levererar fullständiga underlag bedöms risken som hanterbar."
+    }
+  },
+  {
+    "namn": "Restauranger",
+    "sni_label": "SNI 56.100 – Restaurangverksamhet",
+    "samlad_risk": "Förhöjd risk",
+    "sni_kod": "56.100",
+    "fragor": {
+      "1_riskfaktorer_verksamhet": "Restaurangbranschen är en av de mest riskutsatta branscherna enligt Skatteverkets bedömning. Hög kontanthantering, personalintensiv verksamhet med risk för svart arbetskraft, och komplexa varuflöden. Obligatorisk personalliggare sedan 2007. Sannolikhet: Hög. Konsekvens: Medel–Hög – byrån riskerar att hantera underlag som inte speglar verklig verksamhet.",
+      "2_ekonomiska_riskfaktorer": "Varierande och ibland osäkra marginaler. Stora inköp av varor som är svåra att kontrollera mot försäljning (svinn). Risk för oredovisade intäkter. Höga personalkostnader som kan manipuleras. Alkoholtillstånd innebär tillsyn från kommun. Sannolikhet: Medel–Hög. Konsekvens: Medel – felaktig redovisning av omsättning och personal.",
+      "3_syfte_och_art": "Kunden anlitar byrån för löpande bokföring, momsredovisning, lönehantering och deklaration. Ofta mer komplex tjänstleverans än genomsnittet pga. personalhantering, tipsredovisning, alkoholrapportering. Månatlig eller löpande leverans.",
+      "4_behorig_person": "Byrån identifierar firmatecknare/ägare vid kundupptag. Vid ägarbyten (vanligt i branschen) genomförs ny kundkännedomsprocess. Löpande kommunikation med identifierad kontaktperson.",
+      "5_distributionskanaler": "Primärt digital kommunikation. Fysiska kvitton och underlag kan förekomma i större utsträckning än andra branscher. Sannolikhet: Låg. Konsekvens: Låg.",
+      "6_motivering_riskniva": "Restauranger placeras på förhöjd risknivå pga. den höga kontanthanteringen, personalrisker och branschens generella riskprofil. Byrån hanterar risken genom att bevaka bruttomarginaler, kontrollera rimlighetsbedömningar av omsättning, granska personalliggare och vara uppmärksam på ovanliga transaktionsmönster. Vid alkoholtillstånd finns ytterligare kontrollmekanism via kommunens tillsyn."
+    }
+  },
+  {
+    "namn": "Hudvård",
+    "sni_label": "SNI 96.022 – Skönhetsvård",
+    "samlad_risk": "Normal risk",
+    "sni_kod": "96.022",
+    "fragor": {
+      "1_riskfaktorer_verksamhet": "Hudvårdsbranschen har generellt lägre risknivå än frisörer, men viss kontanthantering förekommer. Branschen är inte lika hårt granskad men delar vissa drag med övrig skönhetsbransch. Sannolikhet: Låg–Medel. Konsekvens: Låg–Medel.",
+      "2_ekonomiska_riskfaktorer": "Ofta mindre verksamheter med begränsad omsättning. Tydligare bokningsbaserad verksamhet jämfört med frisörer, vilket ger bättre spårbarhet. Produktförsäljning kan förekomma. Sannolikhet: Låg. Konsekvens: Låg.",
+      "3_syfte_och_art": "Kunden anlitar byrån för löpande bokföring, momsredovisning och deklaration. Normalt en standardiserad och mindre omfattande tjänstleverans. Löpande kundrelation med månatlig eller kvartalsvis leverans.",
+      "4_behorig_person": "Identifiering vid kundupptag genom legitimation och registreringsbevis. Löpande kommunikation via identifierad e-post och telefon.",
+      "5_distributionskanaler": "Digital kommunikation dominerar. Låg risk kopplad till distributionskanal. Sannolikhet: Låg. Konsekvens: Låg.",
+      "6_motivering_riskniva": "Hudvård bedöms som normal risk. Branschen har viss kontanthantering men generellt bättre spårbarhet genom bokningssystem. Inga specifika riskfaktorer utöver de som gäller för mindre tjänsteföretag generellt. Byrån upprätthåller normal övervakning."
+    }
+  },
+  {
+    "namn": "Tatuerare",
+    "sni_label": "SNI 96.090 – Övriga konsumenttjänster",
+    "samlad_risk": "Förhöjd risk",
+    "sni_kod": "96.090",
+    "fragor": {
+      "1_riskfaktorer_verksamhet": "Tatueringsbranschen har historiskt haft hög kontanthantering och kopplingar till svart ekonomi. Branschen är relativt oreglerad. Kunderna betalar ofta stora engångsbelopp. Sannolikhet: Medel. Konsekvens: Medel.",
+      "2_ekonomiska_riskfaktorer": "Varierande prissättning gör det svårt att göra rimlighetsbedömningar av omsättning. Höga kontantandel i vissa fall. Materialkostnader svåra att koppla till specifika jobb. Sannolikhet: Medel. Konsekvens: Medel – risk för oredovisade intäkter.",
+      "3_syfte_och_art": "Kunden anlitar byrån för löpande bokföring och deklaration. Ofta enskild firma med relativt enkel tjänstleverans. Löpande kundrelation.",
+      "4_behorig_person": "Identifiering vid kundupptag. Ofta enmansföretag där ägaren är enda kontaktpersonen.",
+      "5_distributionskanaler": "Primärt digital kommunikation. Låg distributionsrisk. Sannolikhet: Låg. Konsekvens: Låg.",
+      "6_motivering_riskniva": "Tatuerare placeras på förhöjd risknivå pga. kontanthantering och svårigheten att göra rimlighetsbedömningar av omsättning. Byrån hanterar risken genom att kontrollera att certifierat kassaregister används och genom att bevaka intäktsmönster. Risken mildras om kunden primärt tar betalt digitalt (Swish/kort)."
+    }
+  },
+  {
+    "namn": "Åkerier",
+    "sni_label": "SNI 49.410 – Vägtransport av gods",
+    "samlad_risk": "Förhöjd risk",
+    "sni_kod": "49.410",
+    "fragor": {
+      "1_riskfaktorer_verksamhet": "Åkeribranschen har identifierats som riskbransch av Skatteverket med förekomst av fusk med cabotage, svart arbetskraft och underprissättning. Internationella transporter kan innebära gränsöverskridande penningflöden. Sannolikhet: Medel. Konsekvens: Medel–Hög.",
+      "2_ekonomiska_riskfaktorer": "Ofta stora kassaflöden, höga bränslekostnader och fordonsinvesteringar. Komplexa faktureringskedjor med underleverantörer. Risk för fakturabelåning och oseriösa fakturaköp. Sannolikhet: Medel. Konsekvens: Medel – komplexa transaktioner kan dölja oegentligheter.",
+      "3_syfte_och_art": "Kunden anlitar byrån för löpande bokföring, momsredovisning, lönehantering och deklaration. Tjänstleveransen kan vara mer komplex pga. fordonsekonomi, internationella transaktioner och personalhantering.",
+      "4_behorig_person": "Byrån identifierar firmatecknare och eventuella företrädare. Vid utlandsägda bolag genomförs utökad kontroll av verklig huvudman.",
+      "5_distributionskanaler": "Primärt digital kommunikation. Internationella inslag kan förekomma. Sannolikhet: Låg. Konsekvens: Låg–Medel.",
+      "6_motivering_riskniva": "Åkerier placeras på förhöjd risk pga. branschens generella riskprofil, komplexa leverantörskedjor och potentiellt gränsöverskridande verksamhet. Byrån hanterar risken genom att granska leverantörsfakturor, kontrollera att fordon och personal stämmer med redovisad verksamhet, och vara uppmärksam på ovanliga penningflöden."
+    }
+  },
+  {
+    "namn": "Elektriker",
+    "sni_label": "SNI 43.210 – Elinstallation",
+    "samlad_risk": "Normal risk",
+    "sni_kod": "43.210",
+    "fragor": {
+      "1_riskfaktorer_verksamhet": "Elbranschen är relativt reglerad genom auktorisationskrav (Elsäkerhetsverket). Lägre risk för svart ekonomi jämfört med oreglerade hantverksbranscher, men förekommer. ROT-avdrag innebär viss kontrollmekanism via Skatteverket. Sannolikhet: Låg–Medel. Konsekvens: Låg.",
+      "2_ekonomiska_riskfaktorer": "Normala affärsflöden med tydliga kundrelationer (privatpersoner och företag). Faktureringsbaserad verksamhet med god spårbarhet. Materialkostnader kan kontrolleras mot projektintäkter. Sannolikhet: Låg. Konsekvens: Låg.",
+      "3_syfte_och_art": "Kunden anlitar byrån för löpande bokföring, momsredovisning, lönehantering och deklaration. Tjänstleveransen är standardiserad. Löpande månatlig kundrelation.",
+      "4_behorig_person": "Identifiering vid kundupptag. Tydlig firmatecknare, ofta ägarledd verksamhet.",
+      "5_distributionskanaler": "Digital kommunikation. Låg distributionsrisk. Sannolikhet: Låg. Konsekvens: Låg.",
+      "6_motivering_riskniva": "Elektriker bedöms som normal risk tack vare branschens reglering, auktorisationskrav och faktureringsbaserad verksamhet. ROT-avdragssystemet ger ytterligare transparens. Inga specifika riskfaktorer identifierade utöver normala affärsrisker."
+    }
+  },
+  {
+    "namn": "VVS",
+    "sni_label": "SNI 43.220 – VVS-installation",
+    "samlad_risk": "Normal risk",
+    "sni_kod": "43.220",
+    "fragor": {
+      "1_riskfaktorer_verksamhet": "VVS-branschen liknar elbranschen – reglerad med certifieringskrav. ROT-avdrag ger kontrollmekanism. Något lägre risk än oreglerade hantverksbranscher. Sannolikhet: Låg–Medel. Konsekvens: Låg.",
+      "2_ekonomiska_riskfaktorer": "Faktureringsbaserad verksamhet med god spårbarhet. Materialkostnader proportionellt höga och kontrollerbara. Normala kundrelationer. Sannolikhet: Låg. Konsekvens: Låg.",
+      "3_syfte_och_art": "Kunden anlitar byrån för löpande bokföring, momsredovisning, lönehantering och deklaration. Standardiserad tjänstleverans med månatlig leverans.",
+      "4_behorig_person": "Identifiering vid kundupptag. Tydlig firmatecknare, ofta ägarledd verksamhet.",
+      "5_distributionskanaler": "Digital kommunikation. Låg distributionsrisk. Sannolikhet: Låg. Konsekvens: Låg.",
+      "6_motivering_riskniva": "VVS-branschen bedöms som normal risk av samma skäl som elbranschen – reglering, certifiering, faktureringsbaserad verksamhet och ROT-avdragets transparenseffekt."
+    }
+  },
+  {
+    "namn": "Fotvårdare",
+    "sni_label": "SNI 86.909 – Övrig hälso- och sjukvård",
+    "samlad_risk": "Normal risk",
+    "sni_kod": "86.909",
+    "fragor": {
+      "1_riskfaktorer_verksamhet": "Fotvårdsbranschen har generellt låg risknivå. Bokningsbaserad verksamhet med begränsad kontanthantering. Ofta legitimerade utövare. Sannolikhet: Låg. Konsekvens: Låg.",
+      "2_ekonomiska_riskfaktorer": "Mindre verksamheter med förutsägbar och begränsad omsättning. Bokningssystem ger god spårbarhet. Låg risk för oredovisade intäkter. Sannolikhet: Låg. Konsekvens: Låg.",
+      "3_syfte_och_art": "Kunden anlitar byrån för löpande bokföring och deklaration. Enkel och standardiserad tjänstleverans. Ofta kvartalsvis eller månatlig kontakt.",
+      "4_behorig_person": "Identifiering vid kundupptag. Ofta enmansföretag.",
+      "5_distributionskanaler": "Digital kommunikation. Låg risk. Sannolikhet: Låg. Konsekvens: Låg.",
+      "6_motivering_riskniva": "Fotvårdare bedöms som normal risk. Bokningsbaserad verksamhet, ofta legitimerad utövare, begränsad kontanthantering och liten omsättning gör att inga förhöjda riskfaktorer identifieras."
+    }
+  },
+  {
+    "namn": "Hantverkare",
+    "sni_label": "SNI 43.xxx – Byggverksamhet (diverse)",
+    "samlad_risk": "Förhöjd risk",
+    "sni_kod": "43.xxx",
+    "fragor": {
+      "1_riskfaktorer_verksamhet": "Byggbranschen generellt är identifierad som riskbransch av Skatteverket. Förekomst av svartarbete, falska fakturor och underentreprenörskedjor. Branschen har obligatorisk personalliggare på byggarbetsplatser sedan 2016. Sannolikhet: Medel. Konsekvens: Medel.",
+      "2_ekonomiska_riskfaktorer": "Stora projektbaserade kassaflöden. Komplexa underentreprenörskedjor som kan dölja oegentligheter. Risk för fakturabedrägerier. Kontanthantering vid mindre jobb mot privatpersoner. Sannolikhet: Medel. Konsekvens: Medel.",
+      "3_syfte_och_art": "Kunden anlitar byrån för löpande bokföring, momsredovisning, lönehantering och deklaration. Kan vara mer komplex tjänstleverans vid projektredovisning. Löpande kundrelation.",
+      "4_behorig_person": "Identifiering vid kundupptag. Kontroll av firmatecknare och eventuella ombud. Vid underentreprenörer kontrolleras verklig huvudman.",
+      "5_distributionskanaler": "Digital kommunikation med fysiska underlag vid behov. Sannolikhet: Låg. Konsekvens: Låg.",
+      "6_motivering_riskniva": "Hantverkare placeras på förhöjd risk pga. byggbranschens generella riskklassificering. Byrån hanterar risken genom att granska underentreprenörsfakturor, kontrollera personalliggare och bevaka rimlighetsbedömningar av intäkter och kostnader. ROT-avdrag ger viss transparens vid privatjobb."
+    }
+  },
+  {
+    "namn": "Konsulter",
+    "sni_label": "SNI 70.220 – Konsultverksamhet",
+    "samlad_risk": "Normal risk",
+    "sni_kod": "70.220",
+    "fragor": {
+      "1_riskfaktorer_verksamhet": "Konsultverksamhet har generellt låg risk ur penningtvättsperspektiv. Faktureringsbaserad verksamhet med tydliga kundrelationer. Dock kan vissa konsultupplägg användas för felaktig skatteplanering. Sannolikhet: Låg. Konsekvens: Låg.",
+      "2_ekonomiska_riskfaktorer": "Tydliga intäktsflöden genom fakturering. Begränsade materialkostnader. God spårbarhet. Risken ökar vid internationella uppdrag eller komplexa koncernstrukturer. Sannolikhet: Låg. Konsekvens: Låg.",
+      "3_syfte_och_art": "Kunden anlitar byrån för löpande bokföring, momsredovisning och deklaration. Standardiserad tjänstleverans. Löpande kundrelation.",
+      "4_behorig_person": "Identifiering vid kundupptag. Ofta enmans- eller fåmansbolag med tydlig ägare.",
+      "5_distributionskanaler": "Digital kommunikation. Låg risk. Sannolikhet: Låg. Konsekvens: Låg.",
+      "6_motivering_riskniva": "Konsulter bedöms som normal risk. Faktureringsbaserad verksamhet, god spårbarhet och avsaknad av kontanthantering gör att inga förhöjda riskfaktorer identifieras. Byrån är uppmärksam på eventuella ovanliga transaktioner med utländska parter."
+    }
+  },
+  {
+    "namn": "Butiker",
+    "sni_label": "SNI 47.xxx – Detaljhandel",
+    "samlad_risk": "Förhöjd risk",
+    "sni_kod": "47.xxx",
+    "fragor": {
+      "1_riskfaktorer_verksamhet": "Detaljhandel innebär kontanthantering, även om kortbetalningar dominerar allt mer. Obligatoriskt kassaregister sedan 2010. Varuintensiv verksamhet med risk för oredovisat svinn och oredovisade inköp. Sannolikhet: Medel. Konsekvens: Medel.",
+      "2_ekonomiska_riskfaktorer": "Varierande marginaler beroende på bransch. Lagerhantering gör det svårare att kontrollera intäkter mot inköp. Risken varierar beroende på typ av butik – kontantintensiva branscher (t.ex. kiosker, livsmedelbutiker) har högre risk. Sannolikhet: Medel. Konsekvens: Medel.",
+      "3_syfte_och_art": "Kunden anlitar byrån för löpande bokföring, momsredovisning, lagerredovisning, lönehantering och deklaration. Kan vara mer komplex tjänstleverans vid lagerredovisning. Löpande kundrelation.",
+      "4_behorig_person": "Identifiering av firmatecknare vid kundupptag. Kontroll av eventuella företrädare.",
+      "5_distributionskanaler": "Digital kommunikation. Fysiska underlag kan förekomma. Sannolikhet: Låg. Konsekvens: Låg.",
+      "6_motivering_riskniva": "Butiker placeras på förhöjd risk pga. kontanthantering och svårigheten att kontrollera intäkter mot varuflöden. Byrån hanterar risken genom att kontrollera kassarapporter, granska marginaler och vara uppmärksam på avvikelser mellan inköp och redovisad försäljning."
+    }
+  },
+  {
+    "namn": "Bowling",
+    "sni_label": "SNI 93.110 – Sport- och fritidsanläggningar",
+    "samlad_risk": "Normal risk",
+    "sni_kod": "93.110",
+    "fragor": {
+      "1_riskfaktorer_verksamhet": "Bowlingverksamhet har generellt låg risk. Verksamheten är platsbaserad med kassasystem. Viss kontanthantering kan förekomma men minskar stadigt. Kan ha café/restaurangdel som ökar komplexiteten. Sannolikhet: Låg. Konsekvens: Låg.",
+      "2_ekonomiska_riskfaktorer": "Relativt förutsägbar omsättning med boknings- och kassasystem. Eventuell servering medför livsmedelshantering. Normala affärsrisker. Sannolikhet: Låg. Konsekvens: Låg.",
+      "3_syfte_och_art": "Kunden anlitar byrån för löpande bokföring, momsredovisning, lönehantering och deklaration. Standardiserad tjänstleverans. Löpande kundrelation.",
+      "4_behorig_person": "Identifiering vid kundupptag. Tydlig ägarstruktur.",
+      "5_distributionskanaler": "Digital kommunikation. Låg risk. Sannolikhet: Låg. Konsekvens: Låg.",
+      "6_motivering_riskniva": "Bowlingverksamhet bedöms som normal risk. Platsbaserad verksamhet med kassasystem och förutsägbar omsättning. Om serveringsdel ingår bör den delen bevakas separat avseende kontanthantering."
+    }
+  },
+  {
+    "namn": "Körskola",
+    "sni_label": "SNI 85.530 – Trafikskoleverksamhet",
+    "samlad_risk": "Normal risk",
+    "sni_kod": "85.530",
+    "fragor": {
+      "1_riskfaktorer_verksamhet": "Körskolor är reglerade av Transportstyrelsen med tillståndskrav. Bokningsbaserad verksamhet med tydlig prissättning. Låg kontanthantering. Sannolikhet: Låg. Konsekvens: Låg.",
+      "2_ekonomiska_riskfaktorer": "Förutsägbar intäktsmodell baserad på lektionspriser. God spårbarhet genom bokningssystem. Begränsad risk för oredovisade intäkter. Sannolikhet: Låg. Konsekvens: Låg.",
+      "3_syfte_och_art": "Kunden anlitar byrån för löpande bokföring, momsredovisning, lönehantering och deklaration. Standardiserad tjänstleverans. Löpande kundrelation.",
+      "4_behorig_person": "Identifiering vid kundupptag. Tillstånd från Transportstyrelsen verifieras.",
+      "5_distributionskanaler": "Digital kommunikation. Låg risk. Sannolikhet: Låg. Konsekvens: Låg.",
+      "6_motivering_riskniva": "Körskolor bedöms som normal risk. Reglerad verksamhet med tillståndskrav, bokningsbaserad intäktsmodell och god spårbarhet. Inga specifika riskfaktorer identifierade."
+    }
+  },
+  {
+    "namn": "Plåtslagare",
+    "sni_label": "SNI 43.910 – Takarbeten",
+    "samlad_risk": "Förhöjd risk",
+    "sni_kod": "43.910",
+    "fragor": {
+      "1_riskfaktorer_verksamhet": "Plåtslagarbranschen tillhör byggsektorn som generellt är riskklassificerad. Personalliggare krävs på byggarbetsplatser. Risk för underentreprenörskedjor och svart arbetskraft. Sannolikhet: Medel. Konsekvens: Medel.",
+      "2_ekonomiska_riskfaktorer": "Projektbaserade kassaflöden med varierande storlek. Materialkostnader (plåt, isolering) kan kontrolleras mot projekt. Risk för manipulerade underentreprenörsfakturor. Sannolikhet: Medel. Konsekvens: Medel.",
+      "3_syfte_och_art": "Kunden anlitar byrån för löpande bokföring, momsredovisning, lönehantering och deklaration. Tjänstleveransen kan vara mer komplex vid projektredovisning.",
+      "4_behorig_person": "Identifiering vid kundupptag. Kontroll av firmatecknare.",
+      "5_distributionskanaler": "Digital kommunikation med fysiska underlag vid behov. Sannolikhet: Låg. Konsekvens: Låg.",
+      "6_motivering_riskniva": "Plåtslagare placeras på förhöjd risk pga. tillhörighet till byggsektorn. Byrån hanterar risken genom granskning av underentreprenörsfakturor, kontroll av personalliggare och rimlighetsbedömning av intäkter mot material- och personalkostnader."
+    }
+  },
+  {
+    "namn": "Musiker",
+    "sni_label": "SNI 90.010 – Scenkonst",
+    "samlad_risk": "Normal risk",
+    "sni_kod": "90.010",
+    "fragor": {
+      "1_riskfaktorer_verksamhet": "Musikerbranschen har generellt låg risk ur penningtvättsperspektiv. Intäkter genom fakturering av spelningar, royalties och undervisning. Liten kontanthantering. Sannolikhet: Låg. Konsekvens: Låg.",
+      "2_ekonomiska_riskfaktorer": "Ofta oregelbundna intäkter men av begränsad storlek. Tydliga intäktskällor (arrangörer, STIM/SAMI, undervisning). Låg risk för penningtvätt. Sannolikhet: Låg. Konsekvens: Låg.",
+      "3_syfte_och_art": "Kunden anlitar byrån för löpande bokföring och deklaration. Enkel tjänstleverans. Ofta enskild firma eller enmansbolag.",
+      "4_behorig_person": "Identifiering vid kundupptag. Ofta enmansföretag.",
+      "5_distributionskanaler": "Digital kommunikation. Låg risk. Sannolikhet: Låg. Konsekvens: Låg.",
+      "6_motivering_riskniva": "Musiker bedöms som normal risk. Verksamheten har tydliga intäktskällor, begränsad kontanthantering och liten omsättning. Inga specifika riskfaktorer identifierade."
+    }
+  },
+  {
+    "namn": "Friskola",
+    "sni_label": "SNI 85.xxx – Utbildning",
+    "samlad_risk": "Normal risk",
+    "sni_kod": "85.xxx",
+    "fragor": {
+      "1_riskfaktorer_verksamhet": "Friskolor är reglerade av Skolinspektionen och finansieras primärt genom offentliga bidrag (skolpeng). Tydliga kontrollmekanismer finns. Risken är primärt kopplad till felaktig rapportering av elevantal. Sannolikhet: Låg. Konsekvens: Medel – offentliga medel involverade.",
+      "2_ekonomiska_riskfaktorer": "Intäkterna är primärt kommunal skolpeng – transparent och spårbart. Risken ligger i eventuell manipulation av elevstatistik eller otillåtna uttag. Ägarstruktur och koncerntillhörighet bör kontrolleras. Sannolikhet: Låg. Konsekvens: Medel – pga. offentlig finansiering.",
+      "3_syfte_och_art": "Kunden anlitar byrån för löpande bokföring, lönehantering, årsredovisning och deklaration. Mer komplex tjänstleverans med personalhantering och rapporteringskrav. Löpande kundrelation.",
+      "4_behorig_person": "Identifiering av styrelse och firmatecknare vid kundupptag. Kontroll av verklig huvudman och eventuell koncerntillhörighet.",
+      "5_distributionskanaler": "Digital kommunikation. Låg risk. Sannolikhet: Låg. Konsekvens: Låg.",
+      "6_motivering_riskniva": "Friskola bedöms som normal risk trots offentlig finansiering, tack vare den starka tillsynen från Skolinspektionen och transparenta intäktsmodellen. Byrån bör vara uppmärksam på ägarstruktur och eventuella koncerntransaktioner. Vid komplexa ägarstrukturer kan risknivån behöva höjas."
+    }
+  },
+  {
+    "namn": "Domare",
+    "sni_label": "SNI 93.190 – Annan sportverksamhet",
+    "samlad_risk": "Låg risk",
+    "sni_kod": "93.190",
+    "fragor": {
+      "1_riskfaktorer_verksamhet": "Domarverksamhet (idrottsdomare som sidoverksamhet) har mycket låg risk. Tydliga uppdragsgivare (idrottsförbund, föreningar). Arvodesbaserad ersättning med god spårbarhet. Sannolikhet: Låg. Konsekvens: Låg.",
+      "2_ekonomiska_riskfaktorer": "Begränsade och förutsägbara intäkter i form av domararvodesbetalningar. Liten omsättning. Tydliga utbetalare. Sannolikhet: Låg. Konsekvens: Låg.",
+      "3_syfte_och_art": "Kunden anlitar byrån för enklare bokföring och deklaration av domararvoden. Mycket enkel tjänstleverans. Ofta årsvis eller kvartalsvis kontakt.",
+      "4_behorig_person": "Identifiering vid kundupptag. Enmansverksamhet med tydlig ägare.",
+      "5_distributionskanaler": "Digital kommunikation. Mycket låg risk. Sannolikhet: Låg. Konsekvens: Låg.",
+      "6_motivering_riskniva": "Domarverksamhet bedöms som låg risk. Tydliga uppdragsgivare, arvodesbaserad ersättning, begränsad omsättning och avsaknad av kontanthantering gör att inga riskfaktorer identifieras."
+    }
+  }
+]
