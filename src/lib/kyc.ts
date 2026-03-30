@@ -1,6 +1,6 @@
 import { type Riskniva } from "@/data/branschmallar";
+import { type ScbCompany } from "@/lib/scb-types";
 import { matchaBranschmall } from "@/lib/sni-matcher";
-import { hamtaScbMockBolag } from "@/lib/scb-mock";
 
 export interface KycSection {
   id: number;
@@ -13,10 +13,9 @@ export interface KycReport {
   organisationsnummer: string;
   bolagsnamn: string;
   adress: string;
-  postadress: string;
   sniKod: string;
   sniBeskrivning: string;
-  anstallda: number;
+  anstallda: string;
   juridiskForm: string;
   registreringsdatum: string;
   kommun: string;
@@ -78,14 +77,8 @@ export function getRiskClasses(risk: Riskniva) {
   }
 }
 
-export function buildKycReport(orgnr: string): KycReport | null {
-  const company = hamtaScbMockBolag(orgnr);
-
-  if (!company) {
-    return null;
-  }
-
-  const mall = matchaBranschmall(company.sniKod);
+function buildSections(sniKod: string) {
+  const mall = matchaBranschmall(sniKod);
   const bedomningsdatum = new Intl.DateTimeFormat("sv-SE", {
     dateStyle: "long",
   }).format(new Date());
@@ -132,10 +125,46 @@ export function buildKycReport(orgnr: string): KycReport | null {
     : defaultSections;
 
   return {
+    mall,
+    sections,
+    bedomningsdatum,
+  };
+}
+
+export async function buildKycReport(
+  company: ScbCompany | null,
+): Promise<KycReport | null> {
+  if (!company) {
+    return null;
+  }
+
+  const { mall, sections, bedomningsdatum } = buildSections(company.sniKod);
+
+  return {
     ...company,
     riskniva: mall?.samlad_risk ?? "Hög risk",
     branschNamn: mall?.namn ?? "Okänd bransch - manuell bedömning krävs",
     sections,
     bedomningsdatum,
   };
+}
+
+export async function buildGeneriskBranschrapport(sniKod: string) {
+  const { mall, sections, bedomningsdatum } = buildSections(sniKod);
+
+  return {
+    organisationsnummer: `SNI ${sniKod}`,
+    bolagsnamn: mall?.namn ?? "Generisk branschrapport",
+    adress: "Ej bolagsspecifik uppgift",
+    sniKod,
+    sniBeskrivning: mall?.sni_label ?? "Okänd SNI-beskrivning",
+    anstallda: "Ej bolagsspecifik uppgift",
+    juridiskForm: "Ej bolagsspecifik uppgift",
+    registreringsdatum: "Ej bolagsspecifik uppgift",
+    kommun: "Ej bolagsspecifik uppgift",
+    riskniva: mall?.samlad_risk ?? "Hög risk",
+    branschNamn: mall?.namn ?? "Okänd bransch - manuell bedömning krävs",
+    sections,
+    bedomningsdatum,
+  } satisfies KycReport;
 }

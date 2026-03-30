@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { buildKycReport, getRiskClasses } from "@/lib/kyc";
+import { type ScbCompany } from "@/lib/scb-types";
+import { getServerBaseUrl } from "@/lib/server-base-url";
 
 export default async function RapportPage({
   params,
@@ -10,7 +12,38 @@ export default async function RapportPage({
   params: Promise<{ orgnr: string }>;
 }) {
   const { orgnr } = await params;
-  const report = buildKycReport(orgnr);
+  const baseUrl = await getServerBaseUrl();
+  const response = await fetch(`${baseUrl}/api/scb/${encodeURIComponent(orgnr)}`, {
+    cache: "no-store",
+  });
+
+  if (response.status === 404) {
+    return (
+      <main className="min-h-screen bg-[linear-gradient(180deg,#f8fafc_0%,#eef2ff_100%)] px-6 py-8 sm:px-8">
+        <div className="mx-auto max-w-3xl rounded-[2rem] border border-zinc-200 bg-white p-8 shadow-[0_24px_80px_rgba(15,23,42,0.10)]">
+          <Link
+            href="/"
+            className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
+          >
+            Till startsidan
+          </Link>
+          <h1 className="mt-8 text-3xl font-semibold tracking-[-0.04em] text-zinc-950">
+            Bolaget hittades inte
+          </h1>
+          <p className="mt-4 text-base leading-7 text-zinc-600">
+            SCB returnerade inget resultat för organisationsnumret {orgnr}.
+          </p>
+        </div>
+      </main>
+    );
+  }
+
+  if (!response.ok) {
+    notFound();
+  }
+
+  const company = (await response.json()) as ScbCompany;
+  const report = await buildKycReport(company);
 
   if (!report) {
     notFound();
@@ -78,7 +111,7 @@ export default async function RapportPage({
               <InfoCard label="Adress" value={report.adress} />
               <InfoCard
                 label="Bolagsdata"
-                value={`${report.juridiskForm} • ${report.anstallda} anställda`}
+                value={`${report.juridiskForm} • ${report.anstallda}`}
               />
             </div>
           </div>

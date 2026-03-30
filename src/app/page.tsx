@@ -29,24 +29,24 @@ export default function Home() {
                 handläggning.
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-600 sm:text-lg">
-                Ladda upp en kundlista, matcha organisationsnummer mot mockad
-                SCB-data och öppna färdiga KYC-rapporter med branschspecifika
-                texter från byråns mallbibliotek.
+                Sök ett bolag via SCB, bygg en generell branschrapport från
+                SNI-kod eller batcha en kundlista via CSV och Excel. Alla flöden
+                återanvänder samma branschmallar, PDF-export och byråprofil.
               </p>
             </div>
 
             <div className="grid gap-4 rounded-[1.75rem] border border-zinc-200 bg-white/80 p-5 text-sm text-zinc-600 sm:grid-cols-3 lg:min-w-[420px]">
               <div>
-                <p className="text-2xl font-semibold text-zinc-950">17</p>
-                <p>Branschmallar</p>
+                <p className="text-2xl font-semibold text-zinc-950">3</p>
+                <p>Ingångar</p>
               </div>
               <div>
                 <p className="text-2xl font-semibold text-zinc-950">6</p>
                 <p>KYC-sektioner per bolag</p>
               </div>
               <div>
-                <p className="text-2xl font-semibold text-zinc-950">PDF</p>
-                <p>Export för arkivering</p>
+                <p className="text-2xl font-semibold text-zinc-950">SCB</p>
+                <p>Liveuppslag med mTLS</p>
               </div>
             </div>
           </div>
