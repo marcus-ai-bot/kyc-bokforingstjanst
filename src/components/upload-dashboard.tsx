@@ -99,30 +99,30 @@ function ReportPreview({
   reportHref?: string;
 }) {
   return (
-    <div className="rounded-[1.75rem] border border-zinc-200 bg-white p-6 shadow-[0_20px_60px_rgba(15,23,42,0.06)]">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <div className="border border-[#e5e7eb] bg-white">
+      <div className="flex flex-col gap-4 border-b border-[#e5e7eb] px-6 py-5 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-zinc-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#1a1a2e]/55">
             Rapport
           </p>
-          <h3 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-950">
+          <h3 className="mt-2 text-2xl font-semibold tracking-tight text-[#1a1a2e]">
             {report.bolagsnamn}
           </h3>
-          <p className="mt-1 text-sm text-zinc-500">
+          <p className="mt-1 text-sm text-[#1a1a2e]/60">
             {report.organisationsnummer}
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
           <span
-            className={`rounded-full border px-3 py-1 text-sm font-medium ${getRiskClasses(report.riskniva)}`}
+            className={`inline-flex items-center border px-2.5 py-1 text-sm font-medium ${getRiskClasses(report.riskniva)}`}
           >
             {report.riskniva}
           </span>
           {reportHref ? (
             <Link
               href={reportHref}
-              className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
+              className="border border-[#e5e7eb] bg-white px-4 py-2 text-sm font-medium text-[#1a1a2e] transition hover:bg-[#fafafa]"
             >
               Öppna rapport
             </Link>
@@ -131,14 +131,14 @@ function ReportPreview({
             href={pdfHref}
             target="_blank"
             rel="noreferrer"
-            className="rounded-full bg-zinc-950 px-4 py-2 text-sm font-medium text-white transition hover:bg-zinc-800"
+            className="border border-[#2d5aa0] bg-[#2d5aa0] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#244a83]"
           >
             Ladda ner PDF
           </a>
         </div>
       </div>
 
-      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-px border-b border-[#e5e7eb] bg-[#e5e7eb] md:grid-cols-2 xl:grid-cols-4">
         <InfoCard label="SNI-kod" value={`${report.sniKod} • ${report.sniBeskrivning}`} />
         <InfoCard label="Branschmall" value={report.branschNamn} />
         <InfoCard label="Adress" value={report.adress} />
@@ -148,26 +148,26 @@ function ReportPreview({
         />
       </div>
 
-      <div className="mt-6 grid gap-4">
+      <div className="px-6 py-2">
         {report.sections.map((section) => (
           <article
             key={section.id}
-            className="rounded-[1.35rem] border border-zinc-200 bg-zinc-50 p-5"
+            className="border-t border-[#e5e7eb] py-5 first:border-t-0"
           >
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-zinc-500">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#1a1a2e]/55">
                   Fråga {section.id}
                 </p>
-                <h4 className="mt-1 text-lg font-semibold text-zinc-950">
+                <h4 className="mt-1 text-lg font-semibold text-[#1a1a2e]">
                   {section.title}
                 </h4>
               </div>
-              <span className="rounded-full bg-white px-3 py-1 text-sm text-zinc-500 ring-1 ring-zinc-200">
+              <span className="border border-[#e5e7eb] px-2.5 py-1 text-sm text-[#1a1a2e]/60">
                 {section.lagrum}
               </span>
             </div>
-            <p className="mt-4 text-[15px] leading-7 text-zinc-700">
+            <p className="mt-4 text-[15px] leading-7 text-[#1a1a2e]/78">
               {section.text}
             </p>
           </article>
@@ -179,11 +179,11 @@ function ReportPreview({
 
 function InfoCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-[1.35rem] border border-zinc-200 bg-zinc-50 p-4">
-      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+    <div className="bg-white p-4">
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#1a1a2e]/55">
         {label}
       </p>
-      <p className="mt-2 text-sm leading-6 text-zinc-700">{value}</p>
+      <p className="mt-2 text-sm leading-6 text-[#1a1a2e]/78">{value}</p>
     </div>
   );
 }
@@ -333,16 +333,16 @@ export function UploadDashboard() {
   }
 
   return (
-    <div className="grid gap-8">
-      <section className="grid gap-6 xl:grid-cols-3">
-        <section className="rounded-[2rem] border border-zinc-200 bg-white/90 p-8 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur">
-          <span className="text-xs font-semibold uppercase tracking-[0.28em] text-zinc-500">
+    <div className="grid gap-10 py-8">
+      <section className="grid gap-px border border-[#e5e7eb] bg-[#e5e7eb] xl:grid-cols-3">
+        <section className="bg-white p-6 sm:p-7">
+          <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#1a1a2e]/55">
             Orgnr-sök
           </span>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-zinc-950">
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[#1a1a2e]">
             Hämta bolag från SCB
           </h2>
-          <p className="mt-3 text-sm leading-6 text-zinc-600">
+          <p className="mt-3 text-sm leading-6 text-[#1a1a2e]/70">
             Slå upp ett organisationsnummer direkt, bygg rapporten och exportera
             PDF från samma flöde.
           </p>
@@ -352,32 +352,32 @@ export function UploadDashboard() {
               value={orgnrInput}
               onChange={(event) => setOrgnrInput(event.target.value)}
               placeholder="556900-2404"
-              className="w-full rounded-[1.2rem] border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-900 outline-none transition focus:border-zinc-400 focus:bg-white"
+              className="w-full border border-[#e5e7eb] bg-white px-4 py-3 text-sm text-[#1a1a2e] outline-none transition focus:border-[#2d5aa0]"
             />
             <button
               type="submit"
               disabled={orgnrLoading}
-              className="rounded-full bg-zinc-950 px-4 py-2 text-sm font-medium text-white transition hover:bg-zinc-800 disabled:cursor-not-allowed disabled:bg-zinc-400"
+              className="border border-[#2d5aa0] bg-[#2d5aa0] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#244a83] disabled:cursor-not-allowed disabled:border-[#9ca3af] disabled:bg-[#9ca3af]"
             >
               {orgnrLoading ? "Söker..." : "Sök bolag"}
             </button>
           </form>
 
           {orgnrError ? (
-            <p className="mt-4 rounded-[1rem] bg-rose-50 px-4 py-3 text-sm text-rose-700">
+            <p className="mt-4 border border-[#e5e7eb] bg-[#fafafa] px-4 py-3 text-sm text-[#dc2626]">
               {orgnrError}
             </p>
           ) : null}
         </section>
 
-        <section className="rounded-[2rem] border border-zinc-200 bg-white/90 p-8 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur">
-          <span className="text-xs font-semibold uppercase tracking-[0.28em] text-zinc-500">
+        <section className="bg-white p-6 sm:p-7">
+          <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#1a1a2e]/55">
             SNI-sök
           </span>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-zinc-950">
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[#1a1a2e]">
             Matcha branschmall direkt
           </h2>
-          <p className="mt-3 text-sm leading-6 text-zinc-600">
+          <p className="mt-3 text-sm leading-6 text-[#1a1a2e]/70">
             Ange en SNI-kod för att skapa en generell branschrapport utan
             bolagsuppslag.
           </p>
@@ -387,41 +387,41 @@ export function UploadDashboard() {
               value={sniInput}
               onChange={(event) => setSniInput(event.target.value)}
               placeholder="69.201"
-              className="w-full rounded-[1.2rem] border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-900 outline-none transition focus:border-zinc-400 focus:bg-white"
+              className="w-full border border-[#e5e7eb] bg-white px-4 py-3 text-sm text-[#1a1a2e] outline-none transition focus:border-[#2d5aa0]"
             />
             <button
               type="submit"
               disabled={sniLoading}
-              className="rounded-full bg-zinc-950 px-4 py-2 text-sm font-medium text-white transition hover:bg-zinc-800 disabled:cursor-not-allowed disabled:bg-zinc-400"
+              className="border border-[#2d5aa0] bg-[#2d5aa0] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#244a83] disabled:cursor-not-allowed disabled:border-[#9ca3af] disabled:bg-[#9ca3af]"
             >
               {sniLoading ? "Söker..." : "Sök bransch"}
             </button>
           </form>
 
           {sniError ? (
-            <p className="mt-4 rounded-[1rem] bg-rose-50 px-4 py-3 text-sm text-rose-700">
+            <p className="mt-4 border border-[#e5e7eb] bg-[#fafafa] px-4 py-3 text-sm text-[#dc2626]">
               {sniError}
             </p>
           ) : null}
         </section>
 
-        <section className="rounded-[2rem] border border-zinc-200 bg-[linear-gradient(180deg,#fbfdff_0%,#eef4ff_100%)] p-8 shadow-[0_24px_80px_rgba(15,23,42,0.06)]">
-          <span className="text-xs font-semibold uppercase tracking-[0.28em] text-zinc-500">
+        <section className="bg-white p-6 sm:p-7">
+          <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#1a1a2e]/55">
             CSV / Excel
           </span>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-zinc-950">
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-[#1a1a2e]">
             Batcha flera bolag
           </h2>
-          <p className="mt-3 text-sm leading-6 text-zinc-600">
+          <p className="mt-3 text-sm leading-6 text-[#1a1a2e]/70">
             Behåll filimporten. Varje organisationsnummer slås upp mot SCB med
             en sekunds mellanrum.
           </p>
 
-          <label className="mt-6 flex cursor-pointer flex-col items-center justify-center rounded-[1.75rem] border border-dashed border-zinc-300 bg-white/80 px-6 py-12 text-center transition hover:border-zinc-400 hover:bg-white">
-            <span className="text-sm font-medium text-zinc-900">
+          <label className="mt-6 flex cursor-pointer flex-col items-start justify-center border border-dashed border-[#cbd5e1] bg-[#fafafa] px-5 py-6 text-left transition hover:border-[#2d5aa0] hover:bg-white">
+            <span className="text-sm font-medium text-[#1a1a2e]">
               Välj CSV-, XLS- eller XLSX-fil
             </span>
-            <span className="mt-2 text-sm text-zinc-500">
+            <span className="mt-1 text-sm text-[#1a1a2e]/60">
               Minst kolumnen `organisationsnummer`
             </span>
             <input
@@ -434,19 +434,19 @@ export function UploadDashboard() {
 
           <div className="mt-4 flex flex-wrap items-center gap-3 text-sm">
             {fileName ? (
-              <span className="rounded-full bg-white px-3 py-1 text-zinc-700">
+              <span className="border border-[#e5e7eb] bg-white px-3 py-1 text-[#1a1a2e]/75">
                 Fil: {fileName}
               </span>
             ) : null}
             {batchLoading ? (
-              <span className="rounded-full bg-sky-50 px-3 py-1 text-sky-700">
+              <span className="border border-[#e5e7eb] bg-white px-3 py-1 text-[#2d5aa0]">
                 Hämtar bolag...
               </span>
             ) : null}
           </div>
 
           {batchError ? (
-            <p className="mt-4 rounded-[1rem] bg-rose-50 px-4 py-3 text-sm text-rose-700">
+            <p className="mt-4 border border-[#e5e7eb] bg-[#fafafa] px-4 py-3 text-sm text-[#dc2626]">
               {batchError}
             </p>
           ) : null}
@@ -468,78 +468,105 @@ export function UploadDashboard() {
         />
       ) : null}
 
-      <section className="rounded-[2rem] border border-zinc-200 bg-white/90 p-8 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur">
+      <section className="border border-[#e5e7eb] bg-white">
         <div className="flex flex-col gap-3">
-          <span className="text-xs font-semibold uppercase tracking-[0.28em] text-zinc-500">
+          <span className="px-6 pt-6 text-xs font-semibold uppercase tracking-[0.16em] text-[#1a1a2e]/55">
             Resultat
           </span>
-          <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">
+          <h2 className="px-6 text-2xl font-semibold tracking-tight text-[#1a1a2e]">
             Uppladdade bolag
           </h2>
-          <p className="max-w-2xl text-sm leading-6 text-zinc-600">
+          <p className="max-w-2xl px-6 pb-4 text-sm leading-6 text-[#1a1a2e]/70">
             Varje rad hämtas från SCB, matchas mot rätt branschmall och får en
             separat PDF-länk.
           </p>
         </div>
 
-        <div className="mt-8 space-y-4">
+        <div className="overflow-x-auto border-t border-[#e5e7eb]">
           {companies.length > 0 ? (
-            companies.map((company) => (
-              <div
-                key={`${company.organisationsnummer}-${company.bolagsnamn}`}
-                className="flex flex-col gap-4 rounded-[1.5rem] border border-zinc-200 bg-zinc-50 px-5 py-4 sm:flex-row sm:items-center sm:justify-between"
-              >
-                <div>
-                  <p className="font-semibold text-zinc-950">
-                    {company.bolagsnamn}
-                  </p>
-                  <p className="text-sm text-zinc-500">
-                    {company.organisationsnummer}
-                  </p>
-                  {company.status === "matchad" ? (
-                    <p className="mt-2 text-sm text-zinc-600">
-                      {company.sniKod} • {company.branschNamn}
-                    </p>
-                  ) : company.status === "saknas" ? (
-                    <p className="mt-2 text-sm text-rose-600">
-                      Bolaget hittades inte i SCB
-                    </p>
-                  ) : (
-                    <p className="mt-2 text-sm text-rose-600">
-                      Uppslaget misslyckades
-                    </p>
-                  )}
-                </div>
-
-                <div className="flex items-center gap-3">
-                  {company.riskniva ? (
-                    <span
-                      className={`rounded-full border px-3 py-1 text-sm font-medium ${getRiskClasses(company.riskniva)}`}
-                    >
-                      {company.riskniva}
-                    </span>
-                  ) : null}
-                  <a
-                    href={
-                      company.status === "matchad"
-                        ? `/api/pdf/${encodeURIComponent(company.organisationsnummer)}`
-                        : undefined
-                    }
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-                      company.status === "matchad"
-                        ? "bg-zinc-950 text-white hover:bg-zinc-800"
-                        : "pointer-events-none bg-zinc-200 text-zinc-500"
-                    }`}
+            <table className="min-w-full border-collapse">
+              <thead>
+                <tr className="bg-[#fafafa] text-left">
+                  <th className="border-b border-[#e5e7eb] px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[#1a1a2e]/55">
+                    Bolag
+                  </th>
+                  <th className="border-b border-[#e5e7eb] px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[#1a1a2e]/55">
+                    Orgnr
+                  </th>
+                  <th className="border-b border-[#e5e7eb] px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[#1a1a2e]/55">
+                    SNI
+                  </th>
+                  <th className="border-b border-[#e5e7eb] px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[#1a1a2e]/55">
+                    Risk
+                  </th>
+                  <th className="border-b border-[#e5e7eb] px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[#1a1a2e]/55">
+                    PDF
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {companies.map((company) => (
+                  <tr
+                    key={`${company.organisationsnummer}-${company.bolagsnamn}`}
+                    className="align-top"
                   >
-                    Ladda ner PDF
-                  </a>
-                </div>
-              </div>
-            ))
+                    <td className="border-b border-[#e5e7eb] px-6 py-4 text-sm text-[#1a1a2e]">
+                      <div className="font-medium">{company.bolagsnamn}</div>
+                      {company.status === "matchad" ? (
+                        <div className="mt-1 text-xs text-[#1a1a2e]/60">
+                          {company.branschNamn}
+                        </div>
+                      ) : company.status === "saknas" ? (
+                        <div className="mt-1 text-xs text-[#dc2626]">
+                          Bolaget hittades inte i SCB
+                        </div>
+                      ) : (
+                        <div className="mt-1 text-xs text-[#dc2626]">
+                          Uppslaget misslyckades
+                        </div>
+                      )}
+                    </td>
+                    <td className="border-b border-[#e5e7eb] px-6 py-4 text-sm text-[#1a1a2e]/75">
+                      {company.organisationsnummer}
+                    </td>
+                    <td className="border-b border-[#e5e7eb] px-6 py-4 text-sm text-[#1a1a2e]/75">
+                      {company.sniKod ?? "Ej tillgänglig"}
+                    </td>
+                    <td className="border-b border-[#e5e7eb] px-6 py-4 text-sm">
+                      {company.riskniva ? (
+                        <span
+                          className={`inline-flex items-center border px-2.5 py-1 font-medium ${getRiskClasses(company.riskniva)}`}
+                        >
+                          {company.riskniva}
+                        </span>
+                      ) : (
+                        <span className="text-[#1a1a2e]/45">Ej tillgänglig</span>
+                      )}
+                    </td>
+                    <td className="border-b border-[#e5e7eb] px-6 py-4 text-sm">
+                      <a
+                        href={
+                          company.status === "matchad"
+                            ? `/api/pdf/${encodeURIComponent(company.organisationsnummer)}`
+                            : undefined
+                        }
+                        target="_blank"
+                        rel="noreferrer"
+                        className={`inline-flex border px-3 py-2 font-medium transition ${
+                          company.status === "matchad"
+                            ? "border-[#2d5aa0] bg-[#2d5aa0] text-white hover:bg-[#244a83]"
+                            : "pointer-events-none border-[#e5e7eb] bg-[#fafafa] text-[#1a1a2e]/45"
+                        }`}
+                      >
+                        PDF
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           ) : (
-            <div className="rounded-[1.5rem] border border-zinc-200 bg-zinc-50 p-5 text-sm leading-6 text-zinc-600">
+            <div className="px-6 py-5 text-sm leading-6 text-[#1a1a2e]/70">
               Inga bolag inlästa ännu. Ladda upp en fil för att köra sekventiella
               SCB-uppslag och få risknivå per bolag.
             </div>

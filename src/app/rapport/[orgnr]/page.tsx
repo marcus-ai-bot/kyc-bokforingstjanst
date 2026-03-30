@@ -19,18 +19,18 @@ export default async function RapportPage({
 
   if (response.status === 404) {
     return (
-      <main className="min-h-screen bg-[linear-gradient(180deg,#f8fafc_0%,#eef2ff_100%)] px-6 py-8 sm:px-8">
-        <div className="mx-auto max-w-3xl rounded-[2rem] border border-zinc-200 bg-white p-8 shadow-[0_24px_80px_rgba(15,23,42,0.10)]">
+      <main className="px-6 py-8 sm:px-8">
+        <div className="mx-auto max-w-3xl border border-[#e5e7eb] bg-white p-8">
           <Link
             href="/"
-            className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
+            className="inline-flex border border-[#e5e7eb] bg-white px-4 py-2 text-sm font-medium text-[#1a1a2e] transition hover:bg-[#fafafa]"
           >
             Till startsidan
           </Link>
-          <h1 className="mt-8 text-3xl font-semibold tracking-[-0.04em] text-zinc-950">
+          <h1 className="mt-8 text-3xl font-semibold tracking-[-0.02em] text-[#1a1a2e]">
             Bolaget hittades inte
           </h1>
-          <p className="mt-4 text-base leading-7 text-zinc-600">
+          <p className="mt-4 text-base leading-7 text-[#1a1a2e]/70">
             SCB returnerade inget resultat för organisationsnumret {orgnr}.
           </p>
         </div>
@@ -50,12 +50,12 @@ export default async function RapportPage({
   }
 
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,#f8fafc_0%,#eef2ff_100%)] px-6 py-8 sm:px-8">
+    <main className="px-6 py-8 sm:px-8">
       <div className="mx-auto max-w-5xl">
         <div className="mb-6 flex items-center justify-between gap-4">
           <Link
             href="/"
-            className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
+            className="inline-flex border border-[#e5e7eb] bg-white px-4 py-2 text-sm font-medium text-[#1a1a2e] transition hover:bg-[#fafafa]"
           >
             Till startsidan
           </Link>
@@ -63,49 +63,49 @@ export default async function RapportPage({
             href={`/api/pdf/${report.organisationsnummer}`}
             target="_blank"
             rel="noreferrer"
-            className="rounded-full bg-zinc-950 px-4 py-2 text-sm font-medium text-white transition hover:bg-zinc-800"
+            className="inline-flex border border-[#2d5aa0] bg-[#2d5aa0] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#244a83]"
           >
             Exportera PDF
           </a>
         </div>
 
-        <section className="overflow-hidden rounded-[2rem] border border-white/70 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.10)]">
-          <div className="border-b border-zinc-200 bg-[linear-gradient(135deg,#ffffff_0%,#f8fbff_100%)] px-8 py-8">
+        <section className="overflow-hidden border border-[#e5e7eb] bg-white">
+          <div className="border-b border-[#e5e7eb] px-8 py-8">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
               <div>
-                <div className="rounded-2xl bg-zinc-50 px-4 py-3 ring-1 ring-zinc-200">
+                <div>
                   <Image
                     src="/logo-bokforingstjanst.jpg"
                     alt="Bokföringstjänst AB"
-                    width={190}
-                    height={50}
+                    width={150}
+                    height={40}
                     priority
                   />
                 </div>
-                <p className="mt-6 text-sm font-semibold uppercase tracking-[0.25em] text-zinc-500">
+                <p className="mt-6 text-xs font-semibold uppercase tracking-[0.16em] text-[#1a1a2e]/55">
                   Kundkännedom enligt Lag (2017:630)
                 </p>
-                <h1 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-zinc-950">
+                <h1 className="mt-3 text-3xl font-semibold tracking-[-0.02em] text-[#1a1a2e]">
                   {report.bolagsnamn}
                 </h1>
-                <p className="mt-2 text-base text-zinc-600">
+                <p className="mt-2 text-base text-[#1a1a2e]/70">
                   {report.organisationsnummer}
                 </p>
               </div>
 
               <div className="flex flex-col items-start gap-3 lg:items-end">
                 <span
-                  className={`rounded-full border px-4 py-2 text-sm font-semibold ${getRiskClasses(report.riskniva)}`}
+                  className={`inline-flex items-center border px-2.5 py-1 text-sm font-semibold ${getRiskClasses(report.riskniva)}`}
                 >
                   {report.riskniva}
                 </span>
-                <p className="text-sm text-zinc-500">
+                <p className="text-sm text-[#1a1a2e]/55">
                   Bedömd {report.bedomningsdatum}
                 </p>
               </div>
             </div>
 
-            <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-8 grid gap-px bg-[#e5e7eb] md:grid-cols-2 xl:grid-cols-4">
               <InfoCard label="SNI-kod" value={`${report.sniKod} • ${report.sniBeskrivning}`} />
               <InfoCard label="Branschmall" value={report.branschNamn} />
               <InfoCard label="Adress" value={report.adress} />
@@ -116,26 +116,26 @@ export default async function RapportPage({
             </div>
           </div>
 
-          <div className="grid gap-5 px-8 py-8">
+          <div className="px-8 py-2">
             {report.sections.map((section) => (
               <article
                 key={section.id}
-                className="rounded-[1.5rem] border border-zinc-200 bg-zinc-50 p-6"
+                className="border-t border-[#e5e7eb] py-6 first:border-t-0"
               >
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-zinc-500">
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#1a1a2e]/55">
                       Fråga {section.id}
                     </p>
-                    <h2 className="mt-1 text-xl font-semibold text-zinc-950">
+                    <h2 className="mt-1 text-xl font-semibold text-[#1a1a2e]">
                       {section.title}
                     </h2>
                   </div>
-                  <span className="rounded-full bg-white px-3 py-1 text-sm text-zinc-500 ring-1 ring-zinc-200">
+                  <span className="border border-[#e5e7eb] px-2.5 py-1 text-sm text-[#1a1a2e]/60">
                     {section.lagrum}
                   </span>
                 </div>
-                <p className="mt-5 max-w-none text-[15px] leading-7 text-zinc-700">
+                <p className="mt-5 max-w-none text-[15px] leading-7 text-[#1a1a2e]/78">
                   {section.text}
                 </p>
               </article>
@@ -149,11 +149,11 @@ export default async function RapportPage({
 
 function InfoCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-[1.35rem] border border-zinc-200 bg-white/90 p-4">
-      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+    <div className="bg-white p-4">
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#1a1a2e]/55">
         {label}
       </p>
-      <p className="mt-2 text-sm leading-6 text-zinc-700">{value}</p>
+      <p className="mt-2 text-sm leading-6 text-[#1a1a2e]/78">{value}</p>
     </div>
   );
 }

@@ -67,13 +67,13 @@ const defaultSections: KycSection[] = [
 export function getRiskClasses(risk: Riskniva) {
   switch (risk) {
     case "Låg risk":
-      return "border-emerald-200 bg-emerald-50 text-emerald-700";
+      return "border-transparent bg-transparent text-[#059669]";
     case "Normal risk":
-      return "border-sky-200 bg-sky-50 text-sky-700";
+      return "border-transparent bg-transparent text-[#2d5aa0]";
     case "Förhöjd risk":
-      return "border-orange-200 bg-orange-50 text-orange-700";
+      return "border-transparent bg-transparent text-[#d97706]";
     case "Hög risk":
-      return "border-rose-200 bg-rose-50 text-rose-700";
+      return "border-transparent bg-transparent text-[#dc2626]";
   }
 }
 
