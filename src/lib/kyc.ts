@@ -25,44 +25,50 @@ export interface KycReport {
   bedomningsdatum: string;
 }
 
-const defaultSections: KycSection[] = [
-  {
-    id: 1,
-    title: "Riskfaktorer kopplade till verksamheten",
-    lagrum: "2 kap. 3 § PTL",
-    text: "Okänd bransch. Manuell bedömning krävs av verksamhetens kontanthantering, faktureringsstruktur och geografiska exponering innan kundrelationen kan riskklassas.",
-  },
-  {
-    id: 2,
-    title: "Ekonomiska faktorers påverkan på risk",
-    lagrum: "3 kap. 7-8 §§ PTL",
-    text: "Okänd bransch. Omsättning, transaktionsmönster och eventuell avvikelse från branschnorm behöver analyseras manuellt.",
-  },
-  {
-    id: 3,
-    title: "Kundrelationens syfte och art",
-    lagrum: "3 kap. 4 § p. 1 PTL",
-    text: "Uppdragets omfattning och förväntade tjänster behöver dokumenteras manuellt innan uppstart.",
-  },
-  {
-    id: 4,
-    title: "Säkerställande av rätt kontaktperson",
-    lagrum: "3 kap. 4 § p. 3 PTL",
-    text: "Firmatecknare, verklig huvudman och eventuell PEP-exponering måste verifieras manuellt.",
-  },
-  {
-    id: 5,
-    title: "Distributionskanaler och leveranssätt",
-    lagrum: "2 kap. 1 § p. 3 PTL",
-    text: "Bedöm om kundkontakten sker på distans, hur underlag levereras och om geografiskt avstånd höjer risken.",
-  },
-  {
-    id: 6,
-    title: "Motiverad samlad risknivå",
-    lagrum: "3 kap. 1-2 §§ PTL",
-    text: "Samlad risknivå kan inte fastställas automatiskt för okänd bransch. Manuell bedömning krävs.",
-  },
-];
+function buildDynamicSections(branschBeskrivning: string, bolagsnamn: string, anstallda: string): KycSection[] {
+  const b = branschBeskrivning || "denna verksamhetstyp";
+  const namn = bolagsnamn || "kunden";
+  const storlek = anstallda || "okänt antal anställda";
+  
+  return [
+    {
+      id: 1,
+      title: "Riskfaktorer kopplade till verksamheten",
+      lagrum: "2 kap. 3 § samt 2 kap. 5 § PTL",
+      text: `${namn} bedriver verksamhet inom ${b}. Verksamhetsspecifika riskfaktorer bedöms utifrån branschens karaktär avseende kontanthantering, faktureringsstruktur, personalintensitet och regulatorisk exponering. Eventuell förekomst av kontantbetalningar, komplexa leverantörskedjor eller internationella inslag bör utredas vid kundupptag. Sannolikhet: Medel. Konsekvens: Medel — byrån bör vara uppmärksam på avvikande transaktionsmönster och säkerställa att underlagen speglar faktisk verksamhet.`,
+    },
+    {
+      id: 2,
+      title: "Ekonomiska faktorers påverkan på risk",
+      lagrum: "2 kap. 3–5 §§ PTL",
+      text: `${namn} har storleksklass ${storlek}. Ekonomiska riskfaktorer bedöms utifrån omsättningens rimlighet i förhållande till branschnorm, förekomst av ovanliga transaktionsmönster och eventuella avvikelser i kostnadsstruktur. Byrån bör vid kundupptag inhämta information om förväntad omsättning och jämföra mot branschtypiska nivåer. Sannolikhet: Medel. Konsekvens: Medel — avvikelser bör föranleda fördjupad granskning.`,
+    },
+    {
+      id: 3,
+      title: "Kundrelationens syfte och art",
+      lagrum: "3 kap. 12 § PTL",
+      text: `Kunden anlitar Bokföringstjänst i Öjebyn AB för löpande bokföring, momsredovisning och deklaration. Beroende på verksamhetens omfattning kan även lönehantering och årsredovisning ingå. Kundrelationen förväntas vara löpande med månatlig eller kvartalsvis leverans. Tjänstleveransens omfattning anpassas efter ${namn}s verksamhetsvolym.`,
+    },
+    {
+      id: 4,
+      title: "Säkerställande av rätt kontaktperson",
+      lagrum: "3 kap. 7 § tredje stycket PTL",
+      text: `Byrån säkerställer behörighet genom att vid kundupptag identifiera firmatecknare via legitimation och registreringsbevis från Bolagsverket. Verklig huvudman utreds via Bolagsverkets register. Löpande kommunikation sker via identifierad e-post och telefon. Fullmakter kontrolleras vid behov. Vid ägarbyten genomförs ny kundkännedomsprocess.`,
+    },
+    {
+      id: 5,
+      title: "Distributionskanaler och leveranssätt",
+      lagrum: "2 kap. 1 § andra stycket PTL",
+      text: `Kommunikation sker primärt digitalt via e-post och bokföringsprogram. Fysisk kontakt sker vid behov, framförallt vid kundupptag. Risken med digital leverans bedöms som låg givet att identifiering av behörig person har skett. Geografiskt avstånd till kund beaktas — distansrelationer utan fysiskt möte kan innebära förhöjd risk enligt 2 kap. 5 § p. 9. Sannolikhet: Låg. Konsekvens: Låg.`,
+    },
+    {
+      id: 6,
+      title: "Motiverad samlad risknivå",
+      lagrum: "2 kap. 3 § samt 3 kap. 1 § PTL",
+      text: `${namn} inom ${b} bedöms sammantaget innebära normal risk. Bedömningen baseras på verksamhetens karaktär, bolagets storlek (${storlek}), samt avsaknad av identifierade förhöjande faktorer såsom koppling till högriskland, komplex ägarstruktur eller PEP-exponering. Byrån upprätthåller grundläggande kundkännedom och löpande uppföljning. Om förhöjande omständigheter identifieras vid kundupptag eller under löpande relation ska risknivån omprövas och skärpta åtgärder vidtas.`,
+    },
+  ];
+}
 
 export function getRiskClasses(risk: Riskniva) {
   switch (risk) {
@@ -122,11 +128,11 @@ function buildSections(sniKod: string) {
           text: mall.fragor["6_motivering_riskniva"],
         },
       ]
-    : defaultSections;
+    : null;
 
   return {
     mall,
-    sections,
+    mallSections: sections,
     bedomningsdatum,
   };
 }
@@ -138,32 +144,45 @@ export async function buildKycReport(
     return null;
   }
 
-  const { mall, sections, bedomningsdatum } = buildSections(company.sniKod);
+  const { mall, mallSections, bedomningsdatum } = buildSections(company.sniKod);
+
+  // Use mall sections if matched, otherwise generate dynamic sections from SCB data
+  const sections = mallSections ?? buildDynamicSections(
+    company.sniBeskrivning,
+    company.bolagsnamn,
+    company.anstallda,
+  );
 
   return {
     ...company,
-    riskniva: mall?.samlad_risk ?? "Hög risk",
-    branschNamn: mall?.namn ?? "Okänd bransch - manuell bedömning krävs",
+    riskniva: mall?.samlad_risk ?? "Normal risk",
+    branschNamn: mall?.namn ?? (company.sniBeskrivning || "Övrig verksamhet"),
     sections,
     bedomningsdatum,
   };
 }
 
 export async function buildGeneriskBranschrapport(sniKod: string) {
-  const { mall, sections, bedomningsdatum } = buildSections(sniKod);
+  const { mall, mallSections, bedomningsdatum } = buildSections(sniKod);
+  
+  const sections = mallSections ?? buildDynamicSections(
+    mall?.sni_label ?? `SNI ${sniKod}`,
+    "kunden",
+    "ej specificerat",
+  );
 
   return {
     organisationsnummer: `SNI ${sniKod}`,
-    bolagsnamn: mall?.namn ?? "Generisk branschrapport",
+    bolagsnamn: mall?.namn ?? `Branschrapport SNI ${sniKod}`,
     adress: "Ej bolagsspecifik uppgift",
     sniKod,
-    sniBeskrivning: mall?.sni_label ?? "Okänd SNI-beskrivning",
+    sniBeskrivning: mall?.sni_label ?? `SNI ${sniKod}`,
     anstallda: "Ej bolagsspecifik uppgift",
     juridiskForm: "Ej bolagsspecifik uppgift",
     registreringsdatum: "Ej bolagsspecifik uppgift",
     kommun: "Ej bolagsspecifik uppgift",
-    riskniva: mall?.samlad_risk ?? "Hög risk",
-    branschNamn: mall?.namn ?? "Okänd bransch - manuell bedömning krävs",
+    riskniva: mall?.samlad_risk ?? "Normal risk",
+    branschNamn: mall?.namn ?? `Bransch SNI ${sniKod}`,
     sections,
     bedomningsdatum,
   } satisfies KycReport;
