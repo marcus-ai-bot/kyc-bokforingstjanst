@@ -133,13 +133,20 @@ Skriv rapporten uppdelad i exakt 6 sektioner. Varje sektion ska ha:
 - Professionell, konkret text som en Länsstyrelse-inspektör förväntar sig
 
 Texterna ska:
-- Vara KORTA — cirka 100 tecken per svar (kortare om det räcker). Inga onödiga ord.
+- Vara koncisa men substantiella — OLIKA LÄNGD per fråga (se nedan)
 - Vara specifika för DETTA bolag (nämn bolagsnamn, bransch, konkreta fakta)
 - Referera till checklistsvar där relevant
 - Vara skrivna ur byråns perspektiv (Bokföringstjänst i Öjebyn AB)
 - ALDRIG vara generiska/mallaktiga
 - Vara på svenska, professionell ton
-- Exempel på bra längd: "Kontantintensiv restaurangverksamhet. 14 anställda. Kassaregister verifierat. Sannolikhet: Medel. Konsekvens: Medel."
+
+LÄNGDKRAV per fråga:
+- Fråga 1 (Riskfaktorer): 2-3 meningar (~240 tecken). Nämn bransch + konkreta risker.
+- Fråga 2 (Ekonomi): 2-3 meningar (~240 tecken). Storlek, omsättning, rimlighet.
+- Fråga 3 (Syfte/art): 1-2 meningar (~145 tecken). Tjänster + leveransfrekvens.
+- Fråga 4 (Kontaktperson): 1-2 meningar (~145 tecken). Vilka kontroller som gjorts.
+- Fråga 5 (Distribution): 1 mening (~100 tecken). Digital/fysisk + avstånd.
+- Fråga 6 (Samlad risk): 3-4 meningar (~360 tecken). Motivera beslutet, knyt ihop ALLT.
 
 Avsluta med en RISKNIVÅ (exakt en av: "Låg risk", "Normal risk", "Förhöjd risk", "Hög risk").
 

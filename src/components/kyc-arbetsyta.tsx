@@ -147,11 +147,13 @@ export function KycArbetsyta() {
   const obesvarade = Object.values(svar).filter((s) => s === null).length;
   const totalt = Object.keys(svar).length;
 
-  async function handleGenereraPdf() {
+  async function handleGenerera(format: "pdf" | "docx") {
     if (!company) return;
     setPdfLoading(true);
     try {
-      const res = await fetch("/api/pdf/kyc", {
+      const endpoint = format === "pdf" ? "/api/pdf/kyc" : "/api/docx/kyc";
+      const ext = format === "pdf" ? "pdf" : "docx";
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -159,17 +161,17 @@ export function KycArbetsyta() {
           svar,
         }),
       });
-      if (!res.ok) throw new Error("PDF-generering misslyckades");
+      if (!res.ok) throw new Error(`${format.toUpperCase()}-generering misslyckades`);
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `KYC-${company.organisationsnummer}.pdf`;
+      a.download = `KYC-${company.organisationsnummer}.${ext}`;
       a.click();
       URL.revokeObjectURL(url);
     } catch (err) {
       console.error(err);
-      alert("Kunde inte generera PDF. Försök igen.");
+      alert(`Kunde inte generera ${format.toUpperCase()}. Försök igen.`);
     } finally {
       setPdfLoading(false);
     }
@@ -369,11 +371,18 @@ export function KycArbetsyta() {
             </div>
             <div className="flex gap-3">
               <button
-                onClick={handleGenereraPdf}
+                onClick={() => handleGenerera("pdf")}
                 disabled={pdfLoading}
                 className="border border-[#2d5aa0] bg-[#2d5aa0] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#244a83] disabled:bg-[#9ca3af]"
               >
-                {pdfLoading ? "Genererar..." : "Ladda ner PDF med svar"}
+                {pdfLoading ? "Genererar..." : "PDF"}
+              </button>
+              <button
+                onClick={() => handleGenerera("docx")}
+                disabled={pdfLoading}
+                className="border border-[#e5e7eb] bg-white px-4 py-2.5 text-sm font-medium text-[#1a1a2e] hover:bg-[#fafafa] disabled:bg-[#9ca3af] disabled:text-white"
+              >
+                {pdfLoading ? "..." : "Word"}
               </button>
             </div>
           </div>

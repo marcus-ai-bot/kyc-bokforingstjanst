@@ -161,13 +161,13 @@ function buildDynamicSections(company: ScbCompany, analys: BolagRiskAnalys): Kyc
       id: 1,
       title: "Riskfaktorer kopplade till verksamheten",
       lagrum: "2 kap. 3 § samt 2 kap. 5 § PTL",
-      text: `${b}. ${storlek}. Säte: ${company.kommun}.${flaggor.length > 0 ? " Flaggor: " + flaggor.join(", ") + "." : ""} Sannolikhet: ${analys.riskjustering > 0 ? "Medel–Hög" : "Medel"}. Konsekvens: Medel.`,
+      text: `${namn} bedriver ${b} med säte i ${company.kommun}. ${storlek}, ${company.juridiskForm}.${flaggor.length > 0 ? " Identifierade riskfaktorer: " + flaggor.join(", ") + "." : " Inga specifika riskfaktorer identifierade utöver branschens normala riskprofil."} Sannolikhet: ${analys.riskjustering > 0 ? "Medel–Hög" : "Medel"}. Konsekvens: Medel.`,
     },
     {
       id: 2,
       title: "Ekonomiska faktorers påverkan på risk",
       lagrum: "2 kap. 3–5 §§ PTL",
-      text: `${storlek}.${oms ? " Omsättning: " + oms + "." : ""} Rimlighetsbedömning mot branschnorm krävs.${analys.arNystartad ? " Historisk data saknas." : ""} Sannolikhet: ${analys.riskjustering > 0 ? "Medel" : "Låg"}. Konsekvens: Medel.`,
+      text: `${namn} har storleksklass ${storlek}${oms ? " och omsättningsklass " + oms : ""}. Omsättningen bör rimlighets­bedömas mot branschnorm för ${b}.${analys.arNystartad ? " Nystartad — historisk data saknas, kräver tätare uppföljning." : ""}${analys.arEnskildFirma ? " Enskild firma — privat/företag ej åtskilt." : ""} Sannolikhet: ${analys.riskjustering > 0 ? "Medel" : "Låg"}. Konsekvens: Medel.`,
     },
     {
       id: 3,
@@ -191,7 +191,7 @@ function buildDynamicSections(company: ScbCompany, analys: BolagRiskAnalys): Kyc
       id: 6,
       title: "Motiverad samlad risknivå",
       lagrum: "2 kap. 3 § samt 3 kap. 1 § PTL",
-      text: `${samladRisk.toLowerCase()}. ${b}, ${storlek}, reg. ${company.registreringsdatum}.${flaggor.length > 0 ? " Riskfaktorer: " + flaggor.join(", ") + "." : ""} Omprövning inom ${samladRisk === "Hög risk" ? "6" : samladRisk === "Förhöjd risk" ? "9" : "12"} mån.`,
+      text: `${namn} bedöms sammantaget innebära ${samladRisk.toLowerCase()}. Bedömningen baseras på verksamhetens karaktär (${b}), bolagets storlek (${storlek}), juridisk form (${company.juridiskForm}), ålder (reg. ${company.registreringsdatum}) och ägarkategori (${company.agarkategori || "ej angiven"}).${flaggor.length > 0 ? " Identifierade riskfaktorer: " + flaggor.join(", ") + "." : ""} Byrån tillämpar grundläggande kundkännedom. Omprövning ska ske inom ${samladRisk === "Hög risk" ? "6" : samladRisk === "Förhöjd risk" ? "9" : "12"} månader. Om förhöjande omständigheter identifieras ska risknivån omprövas och skärpta åtgärder vidtas enligt 3 kap. 7–8 §§ PTL.`,
     },
   ];
 }
