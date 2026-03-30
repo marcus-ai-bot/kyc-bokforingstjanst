@@ -14,15 +14,16 @@ function normalizeSniKod(value: string) {
 }
 
 function matchScore(input: string, pattern: string) {
+  // Exact match
   if (input === pattern) {
     return 100;
   }
 
+  // Wildcard patterns (xxx, xx, x)
   if (pattern.includes("xxx")) {
     const prefix = pattern.split("xxx")[0];
-
     if (input.startsWith(prefix)) {
-      return prefix.length;
+      return 30 + prefix.length;
     }
   }
 
@@ -33,19 +34,34 @@ function matchScore(input: string, pattern: string) {
     const [inputMajor, inputMinor] = inputParts;
     const [patternMajor, patternMinor] = patternParts;
 
-    if (inputMajor === patternMajor && patternMinor.endsWith("xx")) {
+    if (inputMajor !== patternMajor) {
+      return -1;
+    }
+
+    // Wildcard: 43.xxx, 47.xxx etc
+    if (patternMinor.endsWith("xx")) {
       const prefix = patternMinor.slice(0, -2);
-      if (inputMinor.startsWith(prefix)) {
-        return 50 + prefix.length;
+      if (prefix === "" || inputMinor.startsWith(prefix)) {
+        return 40 + prefix.length;
       }
     }
 
-    if (inputMajor === patternMajor && patternMinor.endsWith("x")) {
+    if (patternMinor.endsWith("x")) {
       const prefix = patternMinor.slice(0, -1);
       if (inputMinor.startsWith(prefix)) {
-        return 70 + prefix.length;
+        return 60 + prefix.length;
       }
     }
+
+    // FUZZY: same major group (e.g. 56.110 vs 56.100)
+    // Match on first digit of minor part (56.1xx = same sub-group)
+    if (inputMinor.length > 0 && patternMinor.length > 0 && 
+        inputMinor[0] === patternMinor[0]) {
+      return 80; // Strong match — same sub-group
+    }
+
+    // Same major code at all = weak match
+    return 20;
   }
 
   return -1;
