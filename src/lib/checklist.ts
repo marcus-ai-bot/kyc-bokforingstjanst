@@ -97,8 +97,16 @@ export function byggBolagsOversikt(company: ScbCompany): BolagsOversikt {
   if (enskild) faktorer.push("Enskild firma — privat och företagets ekonomi ej juridiskt åtskilda");
   if (kontant) faktorer.push("Kontantintensiv bransch enligt Skatteverkets klassificering");
   if (bygg) faktorer.push("Byggbranschen — riskklassificerad av Skatteverket (personalliggare, underentreprenörer)");
-  if ((company.anstallda || "").includes("0") || company.anstallda === "") {
+  const storlekCheck = (company.anstallda || "").trim().toLowerCase();
+  const nollAnstallda = storlekCheck === "" || storlekCheck === "0" || storlekCheck === "0 anställda" || storlekCheck.startsWith("0 ") || storlekCheck === "noll";
+  if (nollAnstallda) {
     faktorer.push("Saknar registrerade anställda");
+  }
+
+  // Kommunalt bolag
+  const bolagNamn = (company.bolagsnamn || "").toLowerCase();
+  if (bolagNamn.includes("kommun") || bolagNamn.includes("region") || bolagNamn.includes("landsting")) {
+    faktorer.push("Kommunalt/offentligt ägt bolag (lägre risk enl. 2 kap. 4 § p. 1 PTL)");
   }
 
   return {

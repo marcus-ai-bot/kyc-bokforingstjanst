@@ -63,10 +63,25 @@ function analyseraBolag(company: ScbCompany): BolagRiskAnalys {
   }
 
   // 3. Storleksklass — 0 anställda
-  const storlek = (company.anstallda || "").toLowerCase();
-  if (storlek.includes("0") || storlek.includes("noll") || storlek === "") {
+  const storlek = (company.anstallda || "").trim().toLowerCase();
+  const harNollAnstallda = storlek === "" || storlek === "0" || storlek === "0 anställda" || storlek.startsWith("0 ") || storlek === "noll";
+  if (harNollAnstallda) {
     faktorer.push("Bolaget saknar registrerade anställda. I personalintensiva branscher kan detta indikera svart arbetskraft eller att verksamheten bedrivs genom underleverantörer utan insyn.");
     riskjustering += 0.5;
+  }
+
+  // 4. Kommunalt/offentligt bolag — sänker risk (2 kap. 4 § p. 1 PTL)
+  const juridiskFormLower = (company.juridiskForm || "").toLowerCase();
+  const bolagsNamnLower = (company.bolagsnamn || "").toLowerCase();
+  const arKommunalt = juridiskFormLower.includes("kommun") ||
+    bolagsNamnLower.includes("kommun") ||
+    bolagsNamnLower.includes("region") ||
+    bolagsNamnLower.includes("landsting") ||
+    bolagsNamnLower.includes("statlig");
+  
+  if (arKommunalt) {
+    faktorer.push("Kommunalt/offentligt ägt bolag — lägre risk enligt 2 kap. 4 § p. 1 PTL (juridisk person under offentlig kontroll).");
+    riskjustering -= 1.5;
   }
 
   return {
