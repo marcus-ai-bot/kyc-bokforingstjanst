@@ -8,4 +8,5 @@ export interface ScbCompany {
   juridiskForm: string;
   registreringsdatum: string;
   kommun: string;
+  agarkategori: string;
 }

@@ -103,10 +103,10 @@ export function byggBolagsOversikt(company: ScbCompany): BolagsOversikt {
     faktorer.push("Saknar registrerade anställda");
   }
 
-  // Kommunalt bolag
-  const bolagNamn = (company.bolagsnamn || "").toLowerCase();
-  if (bolagNamn.includes("kommun") || bolagNamn.includes("region") || bolagNamn.includes("landsting")) {
-    faktorer.push("Kommunalt/offentligt ägt bolag (lägre risk enl. 2 kap. 4 § p. 1 PTL)");
+  // Ägarkategori från SCB
+  const agarkategori = (company.agarkategori || "").toLowerCase();
+  if (agarkategori.includes("kommunal") || agarkategori.includes("statlig") || agarkategori.includes("regional")) {
+    faktorer.push(`Offentligt ägt bolag (${company.agarkategori}) — lägre risk enl. 2 kap. 4 § p. 1 PTL`);
   }
 
   return {

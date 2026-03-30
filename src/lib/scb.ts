@@ -61,6 +61,7 @@ function mapScbCompany(
     juridiskForm: (result["Juridisk form"] ?? "").toString().trim(),
     registreringsdatum: (result["Registreringsdatum"] ?? "").toString().trim(),
     kommun: (result["Säteskommun"] ?? "").toString().trim(),
+    agarkategori: (result["Ägarkategori"] ?? "").toString().trim(),
   };
 }
 

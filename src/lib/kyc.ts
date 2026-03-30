@@ -70,17 +70,16 @@ function analyseraBolag(company: ScbCompany): BolagRiskAnalys {
     riskjustering += 0.5;
   }
 
-  // 4. Kommunalt/offentligt bolag — sänker risk (2 kap. 4 § p. 1 PTL)
-  const juridiskFormLower = (company.juridiskForm || "").toLowerCase();
-  const bolagsNamnLower = (company.bolagsnamn || "").toLowerCase();
-  const arKommunalt = juridiskFormLower.includes("kommun") ||
-    bolagsNamnLower.includes("kommun") ||
-    bolagsNamnLower.includes("region") ||
-    bolagsNamnLower.includes("landsting") ||
-    bolagsNamnLower.includes("statlig");
-  
-  if (arKommunalt) {
-    faktorer.push("Kommunalt/offentligt ägt bolag — lägre risk enligt 2 kap. 4 § p. 1 PTL (juridisk person under offentlig kontroll).");
+  // 4. Ägarkategori — kommunalt/statligt/regionalt sänker risk (2 kap. 4 § p. 1 PTL)
+  const agarkategori = (company.agarkategori || "").toLowerCase();
+  const arOffentligt = agarkategori.includes("kommunal") ||
+    agarkategori.includes("statlig") ||
+    agarkategori.includes("landsting") ||
+    agarkategori.includes("regional") ||
+    agarkategori.includes("offentlig");
+
+  if (arOffentligt) {
+    faktorer.push(`Offentligt ägt bolag (ägarkategori: ${company.agarkategori}) — lägre risk enligt 2 kap. 4 § p. 1 PTL (juridisk person under direkt eller indirekt offentlig kontroll).`);
     riskjustering -= 1.5;
   }
 
@@ -431,6 +430,7 @@ export async function buildGeneriskBranschrapport(sniKod: string) {
     juridiskForm: "Ej bolagsspecifik uppgift",
     registreringsdatum: "",
     kommun: "Ej bolagsspecifik uppgift",
+    agarkategori: "",
   };
 
   const sections = mallSections ?? buildDynamicSections(dummyCompany, {
