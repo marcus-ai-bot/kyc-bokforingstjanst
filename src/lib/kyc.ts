@@ -83,6 +83,38 @@ function analyseraBolag(company: ScbCompany): BolagRiskAnalys {
     riskjustering -= 1.5;
   }
 
+  // 5. Internationella flöden (export/import)
+  if (company.exportImport === "J") {
+    faktorer.push("Bolaget har internationella handelsflöden (export/import), vilket kan innebära gränsöverskridande penningflöden och förhöjd risk enligt 2 kap. 5 § p. 5-8 PTL.");
+    riskjustering += 0.5;
+  }
+
+  // 6. Utländskt ägande
+  if (company.utlandsktAgande && company.utlandsktAgande !== "*" && company.utlandsktAgande !== "") {
+    faktorer.push(`Utländskt ägande registrerat (${company.agarland || "okänt land"}). Kontrollera mot EU:s lista över högrisktredjeländer (3 kap. 11 § PTL).`);
+    riskjustering += 1;
+  }
+
+  // 7. Bolagsstatus (likvidation etc)
+  const bolagsstatus = (company.bolagsstatus || "").toLowerCase();
+  if (bolagsstatus.includes("likvidation") || bolagsstatus.includes("konkurs") || bolagsstatus.includes("avveckling")) {
+    faktorer.push(`Bolaget är under avveckling (${company.bolagsstatus}). Förhöjd risk — avslutade bolag kan användas för penningtvätt.`);
+    riskjustering += 1;
+  }
+
+  // 8. Saknar F-skatt (ovanligt för verksamt bolag)
+  const fskatt = (company.fskattstatus || "").toLowerCase();
+  if (fskatt.includes("ej") || fskatt.includes("inte") || fskatt === "") {
+    faktorer.push("Bolaget saknar F-skatteregistrering, vilket är ovanligt för ett verksamt bolag och kan indikera oseriös verksamhet.");
+    riskjustering += 0.5;
+  }
+
+  // 9. Komplex verksamhet (flera SNI-koder)
+  if (company.ytterligareSni && company.ytterligareSni.length > 2) {
+    faktorer.push(`Bolaget har ${company.ytterligareSni.length + 1} registrerade verksamhetsgrenar, vilket indikerar komplex verksamhet som kräver bredare granskning.`);
+    riskjustering += 0.5;
+  }
+
   return {
     arNystartad,
     arUnder2Ar: manaderSedan,
@@ -430,7 +462,21 @@ export async function buildGeneriskBranschrapport(sniKod: string) {
     juridiskForm: "Ej bolagsspecifik uppgift",
     registreringsdatum: "",
     kommun: "Ej bolagsspecifik uppgift",
+    lan: "",
+    startdatum: "",
+    sniAvdelning: "",
+    ytterligareSni: [],
+    omsattningsklass: "",
+    antalArbetsstallen: "",
     agarkategori: "",
+    utlandsktAgande: "",
+    agarland: "",
+    exportImport: "",
+    arbetsgivarstatus: "",
+    momsstatus: "",
+    fskattstatus: "",
+    bolagsstatus: "",
+    foretagsstatus: "",
   };
 
   const sections = mallSections ?? buildDynamicSections(dummyCompany, {

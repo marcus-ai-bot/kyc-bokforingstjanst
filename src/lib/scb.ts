@@ -42,26 +42,47 @@ function mapScbCompany(
     return null;
   }
 
-  // SCB returns field names like "Bransch_1P, kod" with comma+space
-  const sniKod = (result["Bransch_1P, kod"] ?? result["Bransch_1P"] ?? "").toString().trim();
-  const sniBeskrivning = (result["Bransch_1"] ?? "").toString().trim();
-  const storleksklass = (result["Storleksklass"] ?? result["Stkl, kod"] ?? "").toString().trim();
+  const f = (key: string) => (result[key] ?? "").toString().trim();
   
+  // Samla SNI 2-5
+  const ytterligareSni: { kod: string; beskrivning: string }[] = [];
+  for (const n of [2, 3, 4, 5]) {
+    const kod = f(`Bransch_${n}P, kod`) || f(`Bransch_${n}P`);
+    const beskr = f(`Bransch_${n}`);
+    if (kod && kod.trim()) {
+      ytterligareSni.push({ kod: kod.trim(), beskrivning: beskr });
+    }
+  }
+
   return {
     organisationsnummer: normalized,
-    bolagsnamn: (result["Företagsnamn"] ?? "").toString().trim(),
-    adress: byggAdress(
-      (result["PostAdress"] ?? "").toString(),
-      (result["PostNr"] ?? "").toString(),
-      (result["PostOrt"] ?? "").toString(),
-    ),
-    sniKod,
-    sniBeskrivning,
-    anstallda: (result["Storleksklass"] ?? storleksklass ?? "").toString().trim(),
-    juridiskForm: (result["Juridisk form"] ?? "").toString().trim(),
-    registreringsdatum: (result["Registreringsdatum"] ?? "").toString().trim(),
-    kommun: (result["Säteskommun"] ?? "").toString().trim(),
-    agarkategori: (result["Ägarkategori"] ?? "").toString().trim(),
+    bolagsnamn: f("Företagsnamn"),
+    adress: byggAdress(f("PostAdress"), f("PostNr"), f("PostOrt")),
+    kommun: f("Säteskommun"),
+    lan: f("Säteslän"),
+    juridiskForm: f("Juridisk form"),
+    registreringsdatum: f("Registreringsdatum"),
+    startdatum: f("Startdatum"),
+    
+    sniKod: f("Bransch_1P, kod") || f("Bransch_1P"),
+    sniBeskrivning: f("Bransch_1"),
+    sniAvdelning: f("Avdelning_1"),
+    ytterligareSni,
+    
+    anstallda: f("Storleksklass"),
+    omsattningsklass: f("Storleksklass, oms") || f("Storleksklass Fin, oms"),
+    antalArbetsstallen: f("Antal arbetsställen"),
+    
+    agarkategori: f("Ägarkategori"),
+    utlandsktAgande: f("Utländskt ägande"),
+    agarland: f("Ägarland"),
+    exportImport: f("Export/Importmarkering"),
+    
+    arbetsgivarstatus: f("Arbetsgivarstatus"),
+    momsstatus: f("Momsstatus"),
+    fskattstatus: f("Fskattstatus"),
+    bolagsstatus: f("Bolagsstatus"),
+    foretagsstatus: f("Företagsstatus"),
   };
 }
 

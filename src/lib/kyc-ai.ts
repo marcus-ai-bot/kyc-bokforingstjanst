@@ -62,21 +62,57 @@ function byggPrompt(company: ScbCompany, svar: ChecklistSvar): string {
     else if (status === "ej_aktuellt") ejAktuellt.push(label);
   }
 
+  const ytterligareSniBeskrivning = company.ytterligareSni.length > 0
+    ? company.ytterligareSni.map(s => `  - ${s.kod} — ${s.beskrivning}`).join("\n")
+    : "  Inga ytterligare SNI-koder";
+
   return `Du är en expert på penningtvättslagstiftning (Lag 2017:630 om åtgärder mot penningtvätt och finansiering av terrorism, PTL) och arbetar som KYC-specialist åt Bokföringstjänst i Öjebyn AB (en redovisningsbyrå).
 
 Skriv en komplett kundkännedomsrapport för nedanstående bolag baserat på SCB-data och byråns kontroller.
 
-## BOLAGSDATA FRÅN SCB
+## BOLAGSDATA FRÅN SCB (OBLIGATORISKA FÄLT)
 
+### Grunddata
 - Bolagsnamn: ${company.bolagsnamn}
 - Organisationsnummer: ${company.organisationsnummer}
 - Adress: ${company.adress}
 - Kommun: ${company.kommun}
-- SNI-kod: ${company.sniKod} — ${company.sniBeskrivning}
-- Branschmall: ${mall?.namn ?? "Ingen mall — basera på SNI-beskrivning"}
+- Län: ${company.lan}
 - Juridisk form: ${company.juridiskForm}
-- Storleksklass: ${company.anstallda}
 - Registreringsdatum: ${company.registreringsdatum}
+- Startdatum: ${company.startdatum}
+
+### Bransch
+- Primär SNI-kod: ${company.sniKod} — ${company.sniBeskrivning}
+- SNI-avdelning: ${company.sniAvdelning}
+- Branschmall: ${mall?.namn ?? "Ingen mall — basera på SNI-beskrivning"}
+- Ytterligare SNI-koder:
+${ytterligareSniBeskrivning}
+
+### Storlek & ekonomi
+- Storleksklass (anställda): ${company.anstallda}
+- Omsättningsklass: ${company.omsattningsklass}
+- Antal arbetsställen: ${company.antalArbetsstallen}
+
+### Ägar- och riskdata
+- Ägarkategori: ${company.agarkategori}
+- Utländskt ägande: ${company.utlandsktAgande || "Nej/ej registrerat"}
+- Ägarland: ${company.agarland || "Sverige (antas)"}
+- Export/import: ${company.exportImport === "J" ? "Ja — internationella flöden" : company.exportImport === "N" ? "Nej" : company.exportImport || "Okänt"}
+
+### Registreringsstatus
+- Företagsstatus: ${company.foretagsstatus}
+- Arbetsgivarstatus: ${company.arbetsgivarstatus}
+- Momsstatus: ${company.momsstatus}
+- F-skattestatus: ${company.fskattstatus}
+- Bolagsstatus: ${company.bolagsstatus}
+
+### AUTOMATISK RISKANALYS
+${company.agarkategori.toLowerCase().includes("kommunal") || company.agarkategori.toLowerCase().includes("statlig") ? "⬇️ Offentligt ägt bolag — 2 kap. 4 § p. 1 PTL indikerar låg risk" : ""}
+${company.exportImport === "J" ? "⬆️ Internationella handelsflöden — 2 kap. 5 § p. 5-8 PTL, utreda geografisk exponering" : ""}
+${company.utlandsktAgande && company.utlandsktAgande !== "*" ? `⬆️ Utländskt ägande (${company.agarland}) — kontrollera mot EU:s lista över högrisktredjeländer` : ""}
+${company.bolagsstatus.toLowerCase().includes("likvidation") ? "⬆️ Bolaget under avveckling" : ""}
+${company.ytterligareSni.length > 2 ? `⚠️ Bolaget har ${company.ytterligareSni.length + 1} registrerade verksamhetsgrenar — komplex verksamhet` : ""}
 
 ## BYRÅNS KONTROLLER (checklistsvar)
 
