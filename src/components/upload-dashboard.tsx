@@ -367,13 +367,21 @@ export function UploadDashboard() {
               placeholder="556900-2404"
               className="w-full border border-[#e5e7eb] bg-white px-4 py-3 text-sm text-[#1a1a2e] outline-none transition focus:border-[#2d5aa0]"
             />
-            <button
-              type="submit"
-              disabled={orgnrLoading}
-              className="border border-[#2d5aa0] bg-[#2d5aa0] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#244a83] disabled:cursor-not-allowed disabled:border-[#9ca3af] disabled:bg-[#9ca3af]"
-            >
-              {orgnrLoading ? "Söker..." : "Sök bolag"}
-            </button>
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                disabled={orgnrLoading}
+                className="border border-[#2d5aa0] bg-[#2d5aa0] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#244a83] disabled:cursor-not-allowed disabled:border-[#9ca3af] disabled:bg-[#9ca3af]"
+              >
+                {orgnrLoading ? "Söker..." : "Sök bolag"}
+              </button>
+              <Link
+                href={orgnrInput ? `/kyc?orgnr=${encodeURIComponent(orgnrInput)}` : "/kyc"}
+                className="border border-[#e5e7eb] bg-white px-4 py-2 text-sm font-medium text-[#1a1a2e] transition hover:bg-[#fafafa]"
+              >
+                Fördjupad KYC →
+              </Link>
+            </div>
           </form>
 
           {orgnrError ? (
