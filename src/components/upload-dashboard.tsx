@@ -102,10 +102,12 @@ async function fetchScbCompany(orgnr: string) {
 function ReportPreview({
   report,
   pdfHref,
+  docxHref,
   reportHref,
 }: {
   report: KycReport;
   pdfHref: string;
+  docxHref?: string;
   reportHref?: string;
 }) {
   return (
@@ -143,8 +145,18 @@ function ReportPreview({
             rel="noreferrer"
             className="border border-[#2d5aa0] bg-[#2d5aa0] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#244a83]"
           >
-            Ladda ner PDF
+            PDF
           </a>
+          {docxHref && (
+            <a
+              href={docxHref}
+              target="_blank"
+              rel="noreferrer"
+              className="border border-[#e5e7eb] bg-white px-4 py-2 text-sm font-medium text-[#1a1a2e] transition hover:bg-[#fafafa]"
+            >
+              Word
+            </a>
+          )}
         </div>
       </div>
 
@@ -478,6 +490,7 @@ export function UploadDashboard() {
         <ReportPreview
           report={orgnrReport}
           pdfHref={`/api/pdf/${encodeURIComponent(orgnrReport.organisationsnummer)}`}
+          docxHref={`/api/docx/${encodeURIComponent(orgnrReport.organisationsnummer)}`}
           reportHref={`/rapport/${encodeURIComponent(orgnrReport.organisationsnummer)}`}
         />
       ) : null}
