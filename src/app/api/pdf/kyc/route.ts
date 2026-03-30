@@ -1,11 +1,12 @@
 import { renderToBuffer } from "@react-pdf/renderer";
 
 import { KycPdfDocument } from "@/components/kyc-pdf-document";
-import { buildKycReportWithChecklist } from "@/lib/kyc";
+import { genereraKycMedAI } from "@/lib/kyc-ai";
 import { hamtaLogoDataUri } from "@/lib/pdf-assets";
 import { hamtaScbBolag } from "@/lib/scb";
 
 export const runtime = "nodejs";
+export const maxDuration = 60;
 
 export async function POST(request: Request) {
   try {
@@ -24,10 +25,8 @@ export async function POST(request: Request) {
       return Response.json({ error: "Bolaget hittades inte" }, { status: 404 });
     }
 
-    const report = await buildKycReportWithChecklist(company, svar || {});
-    if (!report) {
-      return Response.json({ error: "Rapport kunde inte skapas" }, { status: 500 });
-    }
+    // Opus analyserar checklistsvaren och skriver rapporten
+    const report = await genereraKycMedAI(company, svar || {});
 
     const logoSrc = await hamtaLogoDataUri();
     const pdfDocument = KycPdfDocument({ report, logoSrc });
@@ -41,6 +40,9 @@ export async function POST(request: Request) {
     });
   } catch (err) {
     console.error("PDF generation error:", err);
-    return Response.json({ error: "Internt fel" }, { status: 500 });
+    return Response.json(
+      { error: "Kunde inte generera rapport. Försök igen." },
+      { status: 500 },
+    );
   }
 }
