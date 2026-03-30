@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { KycArbetsyta } from "@/components/kyc-arbetsyta";
 import Image from "next/image";
 
@@ -31,7 +32,9 @@ export default function KycPage() {
           </a>
         </header>
 
-        <KycArbetsyta />
+        <Suspense fallback={<div className="mt-8 text-sm text-[#1a1a2e]/60">Laddar...</div>}>
+          <KycArbetsyta />
+        </Suspense>
       </div>
     </main>
   );

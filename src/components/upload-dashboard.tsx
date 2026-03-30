@@ -19,7 +19,17 @@ interface BatchCompany {
   riskniva?: KycReport["riskniva"];
   branschNamn?: string;
   sniKod?: string;
+  storleksklass?: string;
+  registreringsdatum?: string;
+  alderManader?: number | null;
   status: "matchad" | "saknas" | "fel";
+}
+
+function beraknaAlderManader(regDatum: string): number | null {
+  if (!regDatum) return null;
+  const reg = new Date(regDatum);
+  const nu = new Date();
+  return Math.floor((nu.getTime() - reg.getTime()) / (1000 * 60 * 60 * 24 * 30));
 }
 
 function normalizeHeader(value: unknown) {
@@ -307,6 +317,9 @@ export function UploadDashboard() {
               riskniva: report?.riskniva,
               branschNamn: report?.branschNamn,
               sniKod: company.sniKod,
+              storleksklass: company.anstallda,
+              registreringsdatum: company.registreringsdatum,
+              alderManader: beraknaAlderManader(company.registreringsdatum),
               status: report ? "matchad" : "fel",
             });
           }
@@ -497,10 +510,16 @@ export function UploadDashboard() {
                     SNI
                   </th>
                   <th className="border-b border-[#e5e7eb] px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[#1a1a2e]/55">
+                    Storlek
+                  </th>
+                  <th className="border-b border-[#e5e7eb] px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[#1a1a2e]/55">
+                    Ålder
+                  </th>
+                  <th className="border-b border-[#e5e7eb] px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[#1a1a2e]/55">
                     Risk
                   </th>
                   <th className="border-b border-[#e5e7eb] px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[#1a1a2e]/55">
-                    PDF
+                    Åtgärd
                   </th>
                 </tr>
               </thead>
@@ -530,7 +549,19 @@ export function UploadDashboard() {
                       {company.organisationsnummer}
                     </td>
                     <td className="border-b border-[#e5e7eb] px-6 py-4 text-sm text-[#1a1a2e]/75">
-                      {company.sniKod ?? "Ej tillgänglig"}
+                      {company.sniKod ?? "—"}
+                    </td>
+                    <td className="border-b border-[#e5e7eb] px-6 py-4 text-sm text-[#1a1a2e]/75">
+                      {company.storleksklass ?? "—"}
+                    </td>
+                    <td className="border-b border-[#e5e7eb] px-6 py-4 text-sm text-[#1a1a2e]/75">
+                      {company.alderManader !== undefined && company.alderManader !== null ? (
+                        <span className={company.alderManader < 24 ? "font-medium text-[#d97706]" : ""}>
+                          {company.alderManader < 24
+                            ? `⚠️ ${company.alderManader} mån`
+                            : `${Math.floor(company.alderManader / 12)} år`}
+                        </span>
+                      ) : "—"}
                     </td>
                     <td className="border-b border-[#e5e7eb] px-6 py-4 text-sm">
                       {company.riskniva ? (
@@ -540,26 +571,42 @@ export function UploadDashboard() {
                           {company.riskniva}
                         </span>
                       ) : (
-                        <span className="text-[#1a1a2e]/45">Ej tillgänglig</span>
+                        <span className="text-[#1a1a2e]/45">—</span>
                       )}
                     </td>
                     <td className="border-b border-[#e5e7eb] px-6 py-4 text-sm">
-                      <a
-                        href={
-                          company.status === "matchad"
-                            ? `/api/pdf/${encodeURIComponent(company.organisationsnummer)}`
-                            : undefined
-                        }
-                        target="_blank"
-                        rel="noreferrer"
-                        className={`inline-flex border px-3 py-2 font-medium transition ${
-                          company.status === "matchad"
-                            ? "border-[#2d5aa0] bg-[#2d5aa0] text-white hover:bg-[#244a83]"
-                            : "pointer-events-none border-[#e5e7eb] bg-[#fafafa] text-[#1a1a2e]/45"
-                        }`}
-                      >
-                        PDF
-                      </a>
+                      <div className="flex gap-2">
+                        <Link
+                          href={
+                            company.status === "matchad"
+                              ? `/kyc?orgnr=${encodeURIComponent(company.organisationsnummer)}`
+                              : "#"
+                          }
+                          className={`inline-flex border px-3 py-2 font-medium transition ${
+                            company.status === "matchad"
+                              ? "border-[#2d5aa0] bg-[#2d5aa0] text-white hover:bg-[#244a83]"
+                              : "pointer-events-none border-[#e5e7eb] bg-[#fafafa] text-[#1a1a2e]/45"
+                          }`}
+                        >
+                          KYC
+                        </Link>
+                        <a
+                          href={
+                            company.status === "matchad"
+                              ? `/api/pdf/${encodeURIComponent(company.organisationsnummer)}`
+                              : undefined
+                          }
+                          target="_blank"
+                          rel="noreferrer"
+                          className={`inline-flex border px-3 py-2 font-medium transition ${
+                            company.status === "matchad"
+                              ? "border-[#e5e7eb] bg-white text-[#1a1a2e] hover:bg-[#fafafa]"
+                              : "pointer-events-none border-[#e5e7eb] bg-[#fafafa] text-[#1a1a2e]/45"
+                          }`}
+                        >
+                          PDF
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 ))}

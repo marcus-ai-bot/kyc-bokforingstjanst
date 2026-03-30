@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   type CheckCategory,
   type CheckItemStatus,
@@ -49,15 +50,52 @@ function beraknaRiskniva(
 }
 
 export function KycArbetsyta() {
+  const searchParams = useSearchParams();
   const [orgnrInput, setOrgnrInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [autoSearched, setAutoSearched] = useState(false);
 
   // Steg 2: Bolagsdata + checklista
   const [company, setCompany] = useState<ScbCompany | null>(null);
   const [oversikt, setOversikt] = useState<BolagsOversikt | null>(null);
   const [kategorier, setKategorier] = useState<CheckCategory[]>([]);
   const [svar, setSvar] = useState<Record<string, CheckItemStatus>>({});
+
+  // Auto-sök om ?orgnr= finns i URL
+  useEffect(() => {
+    const orgnrParam = searchParams.get("orgnr");
+    if (orgnrParam && !autoSearched) {
+      setAutoSearched(true);
+      setOrgnrInput(orgnrParam);
+      // Trigger search
+      const norm = normaliseraOrgnr(orgnrParam);
+      if (norm) {
+        setLoading(true);
+        fetchScbCompany(norm).then((c) => {
+          if (c) {
+            setCompany(c);
+            setOversikt(byggBolagsOversikt(c));
+            const kat = byggChecklista(c);
+            setKategorier(kat);
+            const init: Record<string, CheckItemStatus> = {};
+            for (const k of kat) {
+              for (const item of k.items) {
+                init[item.id] = null;
+              }
+            }
+            setSvar(init);
+          } else {
+            setError("Bolaget hittades inte i SCB:s register.");
+          }
+        }).catch(() => {
+          setError("Kunde inte hämta bolagsdata.");
+        }).finally(() => {
+          setLoading(false);
+        });
+      }
+    }
+  }, [searchParams, autoSearched]);
 
   async function handleSok(e: React.FormEvent) {
     e.preventDefault();
