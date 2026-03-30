@@ -8,18 +8,9 @@ import { type ScbCompany } from "@/lib/scb-types";
 const SCB_URL =
   "https://privateapi.scb.se/nv0101/v1/sokpavar/api/Je/HamtaForetag";
 
-interface ScbApiResponseItem {
-  Företagsnamn?: string;
-  PostAdress?: string;
-  PostNr?: string;
-  PostOrt?: string;
-  Bransch_1P?: string;
-  Bransch_1?: string;
-  Storleksklass?: string;
-  "Juridisk form"?: string;
-  Registreringsdatum?: string;
-  Säteskommun?: string;
-}
+// SCB field names have inconsistent casing/spacing — we use index access
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ScbApiResponseItem = Record<string, any>;
 
 function getClientCredentials() {
   const certB64 = process.env.SCB_CERT_B64;
@@ -51,16 +42,25 @@ function mapScbCompany(
     return null;
   }
 
+  // SCB returns field names like "Bransch_1P, kod" with comma+space
+  const sniKod = (result["Bransch_1P, kod"] ?? result["Bransch_1P"] ?? "").toString().trim();
+  const sniBeskrivning = (result["Bransch_1"] ?? "").toString().trim();
+  const storleksklass = (result["Storleksklass"] ?? result["Stkl, kod"] ?? "").toString().trim();
+  
   return {
     organisationsnummer: normalized,
-    bolagsnamn: result.Företagsnamn?.trim() ?? "",
-    adress: byggAdress(result.PostAdress, result.PostNr, result.PostOrt),
-    sniKod: result.Bransch_1P?.trim() ?? "",
-    sniBeskrivning: result.Bransch_1?.trim() ?? "",
-    anstallda: result.Storleksklass?.trim() ?? "",
-    juridiskForm: result["Juridisk form"]?.trim() ?? "",
-    registreringsdatum: result.Registreringsdatum?.trim() ?? "",
-    kommun: result.Säteskommun?.trim() ?? "",
+    bolagsnamn: (result["Företagsnamn"] ?? "").toString().trim(),
+    adress: byggAdress(
+      (result["PostAdress"] ?? "").toString(),
+      (result["PostNr"] ?? "").toString(),
+      (result["PostOrt"] ?? "").toString(),
+    ),
+    sniKod,
+    sniBeskrivning,
+    anstallda: (result["Storleksklass"] ?? storleksklass ?? "").toString().trim(),
+    juridiskForm: (result["Juridisk form"] ?? "").toString().trim(),
+    registreringsdatum: (result["Registreringsdatum"] ?? "").toString().trim(),
+    kommun: (result["Säteskommun"] ?? "").toString().trim(),
   };
 }
 
