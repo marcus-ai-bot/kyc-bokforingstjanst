@@ -135,17 +135,10 @@ function justeraRiskniva(basRisk: Riskniva, justering: number): Riskniva {
 // ── Anpassa malltexter med bolagsdata ──────────────────────────────
 
 function anpassaMalltext(text: string, company: ScbCompany, analys: BolagRiskAnalys): string {
-  let tillagg = "";
-
-  if (analys.arNystartad) {
-    tillagg += ` Notera att ${company.bolagsnamn} är nystartad (registrerad ${company.registreringsdatum}), vilket innebär att historiska mönster saknas och tätare uppföljning rekommenderas under de första 24 månaderna.`;
-  }
-
-  if (analys.arEnskildFirma) {
-    tillagg += ` Då verksamheten bedrivs som enskild firma saknas juridisk åtskillnad mellan privat och företagets ekonomi, vilket kräver särskild uppmärksamhet vid granskning av underlag.`;
-  }
-
-  return text + tillagg;
+  const tillagg: string[] = [];
+  if (analys.arNystartad) tillagg.push(`Nystartad (reg. ${company.registreringsdatum}).`);
+  if (analys.arEnskildFirma) tillagg.push("Enskild firma — blandad ekonomi.");
+  return tillagg.length > 0 ? text + " " + tillagg.join(" ") : text;
 }
 
 // ── Dynamiska sektioner (för branscher utan mall) ──────────────────
@@ -153,59 +146,52 @@ function anpassaMalltext(text: string, company: ScbCompany, analys: BolagRiskAna
 function buildDynamicSections(company: ScbCompany, analys: BolagRiskAnalys): KycSection[] {
   const b = company.sniBeskrivning || "denna verksamhetstyp";
   const namn = company.bolagsnamn || "kunden";
-  const storlek = company.anstallda || "okänt antal anställda";
-  const juridiskForm = company.juridiskForm || "okänd bolagsform";
-
-  const nystartatText = analys.arNystartad
-    ? ` Bolaget är nystartad (registrerad ${company.registreringsdatum}), vilket innebär förhöjd risk då historisk verksamhetsdata saknas. Nystartade bolag kan ha etablerats som brottsverktyg och kräver tätare uppföljning under de första 24 månaderna.`
-    : "";
-
-  const enskildText = analys.arEnskildFirma
-    ? " Verksamhetsformen enskild firma innebär att privat och företagets ekonomi inte är juridiskt åtskilda, vilket försvårar byråns granskning och ökar risken för sammanblandning av medel."
-    : "";
-
-  const nollAnstText = analys.faktorer.some(f => f.includes("saknar registrerade anställda"))
-    ? " Bolaget saknar registrerade anställda, vilket i kombination med branschens karaktär bör föranleda en bedömning av huruvida detta är rimligt."
-    : "";
-
+  const storlek = company.anstallda || "okänt";
+  const oms = company.omsattningsklass || "";
   const samladRisk = justeraRiskniva("Normal risk", analys.riskjustering);
+
+  const flaggor: string[] = [];
+  if (analys.arNystartad) flaggor.push(`nystartad (${analys.arUnder2Ar} mån)`);
+  if (analys.arEnskildFirma) flaggor.push("enskild firma");
+  if (analys.faktorer.some(f => f.includes("saknar registrerade"))) flaggor.push("0 anställda");
+  if (company.exportImport === "J") flaggor.push("export/import");
 
   return [
     {
       id: 1,
       title: "Riskfaktorer kopplade till verksamheten",
       lagrum: "2 kap. 3 § samt 2 kap. 5 § PTL",
-      text: `${namn} (${company.organisationsnummer}) bedriver verksamhet inom ${b}, med säte i ${company.kommun || "okänd kommun"}. Bolaget är registrerat som ${juridiskForm} med storleksklass ${storlek}. Verksamhetsspecifika riskfaktorer bedöms utifrån branschens karaktär avseende kontanthantering, faktureringsstruktur, personalintensitet och regulatorisk exponering.${nystartatText}${enskildText}${nollAnstText} Sannolikhet: ${analys.riskjustering > 0 ? "Medel–Hög" : "Medel"}. Konsekvens: Medel — byrån bör vara uppmärksam på avvikande transaktionsmönster och säkerställa att underlagen speglar faktisk verksamhet.`,
+      text: `${b}. ${storlek}. Säte: ${company.kommun}.${flaggor.length > 0 ? " Flaggor: " + flaggor.join(", ") + "." : ""} Sannolikhet: ${analys.riskjustering > 0 ? "Medel–Hög" : "Medel"}. Konsekvens: Medel.`,
     },
     {
       id: 2,
       title: "Ekonomiska faktorers påverkan på risk",
       lagrum: "2 kap. 3–5 §§ PTL",
-      text: `${namn} har storleksklass ${storlek} och juridisk form ${juridiskForm}. Ekonomiska riskfaktorer bedöms utifrån omsättningens rimlighet i förhållande till branschnorm för ${b}, förekomst av ovanliga transaktionsmönster och eventuella avvikelser i kostnadsstruktur.${enskildText} Byrån bör vid kundupptag inhämta information om förväntad omsättning och jämföra mot branschtypiska nivåer.${analys.arNystartad ? " Avsaknad av historisk data kräver mer frekventa rimlighetsbedömningar under uppstartsfasen." : ""} Sannolikhet: ${analys.riskjustering > 0 ? "Medel" : "Låg–Medel"}. Konsekvens: Medel — avvikelser bör föranleda fördjupad granskning.`,
+      text: `${storlek}.${oms ? " Omsättning: " + oms + "." : ""} Rimlighetsbedömning mot branschnorm krävs.${analys.arNystartad ? " Historisk data saknas." : ""} Sannolikhet: ${analys.riskjustering > 0 ? "Medel" : "Låg"}. Konsekvens: Medel.`,
     },
     {
       id: 3,
       title: "Kundrelationens syfte och art",
       lagrum: "3 kap. 12 § PTL",
-      text: `${namn} anlitar Bokföringstjänst i Öjebyn AB för löpande bokföring, momsredovisning och deklaration. Beroende på verksamhetens omfattning inom ${b} kan även lönehantering och årsredovisning ingå. Kundrelationen förväntas vara löpande med månatlig eller kvartalsvis leverans. Tjänstleveransens omfattning anpassas efter bolagets verksamhetsvolym (storleksklass ${storlek}).`,
+      text: `Löpande bokföring, moms och deklaration. Löne- och årsredovisning vid behov. Månatlig leverans anpassad efter verksamhetsvolym (${storlek}).`,
     },
     {
       id: 4,
       title: "Säkerställande av rätt kontaktperson",
       lagrum: "3 kap. 7 § tredje stycket PTL",
-      text: `Byrån säkerställer behörighet genom att vid kundupptag identifiera firmatecknare via legitimation och registreringsbevis från Bolagsverket. Verklig huvudman utreds via Bolagsverkets VHM-register (3 kap. 8 § PTL). PEP-screening genomförs (3 kap. 10 § PTL). Kontroll görs avseende om kunden är etablerad i ett av Europeiska kommissionen identifierat högrisktredjeland (3 kap. 11 § PTL). Löpande kommunikation sker via identifierad e-post och telefon. Fullmakter kontrolleras vid behov.${analys.arEnskildFirma ? " Vid enskild firma identifieras innehavaren som både firmatecknare och verklig huvudman." : ""}`,
+      text: `Legitimation och registreringsbevis. VHM via Bolagsverket. PEP-screening. Högrisklandskontroll.${analys.arEnskildFirma ? " Innehavare = firmatecknare + VHM." : ""}`,
     },
     {
       id: 5,
       title: "Distributionskanaler och leveranssätt",
       lagrum: "2 kap. 1 § andra stycket PTL",
-      text: `Kommunikation med ${namn} sker primärt digitalt via e-post och bokföringsprogram. Fysisk kontakt sker vid behov, framförallt vid kundupptag. Risken med digital leverans bedöms som låg givet att identifiering av behörig person har skett. Geografiskt avstånd beaktas — bolaget har säte i ${company.kommun || "okänd kommun"}. Distansrelationer utan fysiskt möte kan innebära förhöjd risk enligt 2 kap. 5 § p. 9 PTL. Sannolikhet: Låg. Konsekvens: Låg.`,
+      text: `Digital kommunikation. Fysiskt möte vid kundupptag. Säte: ${company.kommun}. Sannolikhet: Låg. Konsekvens: Låg.`,
     },
     {
       id: 6,
       title: "Motiverad samlad risknivå",
       lagrum: "2 kap. 3 § samt 3 kap. 1 § PTL",
-      text: `${namn} inom ${b} bedöms sammantaget innebära ${samladRisk.toLowerCase()}. Bedömningen baseras på: verksamhetens karaktär (${b}), bolagets storlek (${storlek}), juridisk form (${juridiskForm}), bolagets ålder (registrerad ${company.registreringsdatum || "okänt datum"})${analys.faktorer.length > 0 ? ", samt identifierade riskfaktorer: " + analys.faktorer.map((_, i) => `(${i + 1}) ${analys.faktorer[i].split(".")[0]}`).join("; ") : ""}. Byrån har inte identifierat koppling till högriskland, komplex ägarstruktur eller PEP-exponering — dessa kontroller ska genomföras vid kundupptag. Om förhöjande omständigheter identifieras ska risknivån omprövas och skärpta åtgärder enligt 3 kap. 7–8 §§ PTL vidtas, inklusive tätare uppföljning och utökad dokumentation.`,
+      text: `${samladRisk.toLowerCase()}. ${b}, ${storlek}, reg. ${company.registreringsdatum}.${flaggor.length > 0 ? " Riskfaktorer: " + flaggor.join(", ") + "." : ""} Omprövning inom ${samladRisk === "Hög risk" ? "6" : samladRisk === "Förhöjd risk" ? "9" : "12"} mån.`,
     },
   ];
 }

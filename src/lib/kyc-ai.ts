@@ -133,12 +133,13 @@ Skriv rapporten uppdelad i exakt 6 sektioner. Varje sektion ska ha:
 - Professionell, konkret text som en Länsstyrelse-inspektör förväntar sig
 
 Texterna ska:
-- Vara specifika för DETTA bolag (nämn bolagsnamnet, orgnr, bransch, adress)
-- Referera till konkreta checklistsvar (vad byrån har/inte har kontrollerat)
-- Bedöma sannolikhet och konsekvens där relevant
+- Vara KORTA — cirka 100 tecken per svar (kortare om det räcker). Inga onödiga ord.
+- Vara specifika för DETTA bolag (nämn bolagsnamn, bransch, konkreta fakta)
+- Referera till checklistsvar där relevant
 - Vara skrivna ur byråns perspektiv (Bokföringstjänst i Öjebyn AB)
-- ALDRIG vara generiska/mallaktiga — varje mening ska tillföra information
+- ALDRIG vara generiska/mallaktiga
 - Vara på svenska, professionell ton
+- Exempel på bra längd: "Kontantintensiv restaurangverksamhet. 14 anställda. Kassaregister verifierat. Sannolikhet: Medel. Konsekvens: Medel."
 
 Avsluta med en RISKNIVÅ (exakt en av: "Låg risk", "Normal risk", "Förhöjd risk", "Hög risk").
 
