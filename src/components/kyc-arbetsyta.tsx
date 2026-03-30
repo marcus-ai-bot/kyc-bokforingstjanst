@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import {
   type CheckCategory,
   type CheckItemStatus,
@@ -105,8 +104,38 @@ export function KycArbetsyta() {
 
   const riskniva = oversikt ? beraknaRiskniva(oversikt, svar, kategorier) : null;
 
+  const [pdfLoading, setPdfLoading] = useState(false);
+
   const obesvarade = Object.values(svar).filter((s) => s === null).length;
   const totalt = Object.keys(svar).length;
+
+  async function handleGenereraPdf() {
+    if (!company) return;
+    setPdfLoading(true);
+    try {
+      const res = await fetch("/api/pdf/kyc", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          organisationsnummer: company.organisationsnummer,
+          svar,
+        }),
+      });
+      if (!res.ok) throw new Error("PDF-generering misslyckades");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `KYC-${company.organisationsnummer}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error(err);
+      alert("Kunde inte generera PDF. Försök igen.");
+    } finally {
+      setPdfLoading(false);
+    }
+  }
 
   return (
     <div className="mt-8 space-y-8">
@@ -301,20 +330,13 @@ export function KycArbetsyta() {
               </p>
             </div>
             <div className="flex gap-3">
-              <Link
-                href={company ? `/rapport/${company.organisationsnummer}` : "#"}
-                className="border border-[#e5e7eb] bg-white px-4 py-2.5 text-sm font-medium text-[#1a1a2e] hover:bg-[#fafafa]"
+              <button
+                onClick={handleGenereraPdf}
+                disabled={pdfLoading}
+                className="border border-[#2d5aa0] bg-[#2d5aa0] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#244a83] disabled:bg-[#9ca3af]"
               >
-                Visa rapport
-              </Link>
-              <a
-                href={company ? `/api/pdf/${company.organisationsnummer}` : "#"}
-                target="_blank"
-                rel="noreferrer"
-                className="border border-[#2d5aa0] bg-[#2d5aa0] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#244a83]"
-              >
-                Ladda ner PDF
-              </a>
+                {pdfLoading ? "Genererar..." : "Ladda ner PDF med svar"}
+              </button>
             </div>
           </div>
         </section>

@@ -269,6 +269,139 @@ export async function buildKycReport(
   };
 }
 
+// ── Rapport med checklistsvar ───────────────────────────────────────
+
+export async function buildKycReportWithChecklist(
+  company: ScbCompany,
+  svar: Record<string, string | null>,
+): Promise<KycReport | null> {
+  const baseReport = await buildKycReport(company);
+  if (!baseReport) return null;
+
+  // Samla svar-baserade tillägg per fråga
+  const bekraftelser: string[] = [];
+  const riskhojande: string[] = [];
+  const risksankande: string[] = [];
+  const tjanster: string[] = [];
+
+  // Identifiering (fråga 4)
+  if (svar["id_legitimation"] === "ja") bekraftelser.push("Legitimationskontroll genomförd");
+  if (svar["id_registreringsbevis"] === "ja") bekraftelser.push("Registreringsbevis kontrollerat");
+  if (svar["id_vhm"] === "ja") bekraftelser.push("Verklig huvudman utredd");
+  if (svar["id_pep"] === "ja") bekraftelser.push("PEP-screening genomförd");
+  if (svar["id_pep_positiv"] === "ja") riskhojande.push("Kunden eller VHM identifierad som PEP — skärpta åtgärder krävs enligt 3 kap. 10–14 §§ PTL");
+  if (svar["id_hogriskland"] === "ja") riskhojande.push("Koppling till EU-listat högrisktredjeland identifierad — skärpta åtgärder krävs enligt 3 kap. 11 § PTL");
+
+  // Verksamhet (fråga 1)
+  if (svar["verk_kontant"] === "ja") riskhojande.push("Kontanthantering förekommer i verksamheten");
+  if (svar["verk_kassaregister"] === "ja") risksankande.push("Certifierat kassaregister används");
+  if (svar["verk_komplex_struktur"] === "ja") riskhojande.push("Komplex ägarstruktur identifierad (2 kap. 5 § p. 1 PTL)");
+  if (svar["verk_branschbyte"] === "ja") riskhojande.push("Bolaget har bytt bransch sedan registrering");
+  if (svar["verk_internationell"] === "ja") riskhojande.push("Internationella transaktioner förekommer");
+  if (svar["verk_personalliggare"] === "ja") risksankande.push("Personalliggare förs");
+  if (svar["verk_svartarbete_risk"] === "ja") riskhojande.push("Indikationer på svart arbetskraft eller oredovisade intäkter");
+  if (svar["verk_ue_kedjor"] === "ja") riskhojande.push("Underentreprenörer anlitas");
+  if (svar["verk_id06"] === "ja") risksankande.push("ID06-system används");
+  if (svar["verk_nystartad_verifiering"] === "ja") risksankande.push("Verksamhetens faktiska existens verifierad");
+
+  // Ekonomi (fråga 2)
+  if (svar["eko_omsattning_rimlig"] === "ja") risksankande.push("Omsättningen bedöms som rimlig");
+  if (svar["eko_avvikande_transaktioner"] === "ja") riskhojande.push("Avvikande transaktionsmönster observerade");
+  if (svar["eko_osanna_fakturor"] === "ja") riskhojande.push("Risk för osanna fakturor");
+  if (svar["eko_laneforhalland"] === "ja") riskhojande.push("Ovanliga lån eller finansieringskällor");
+  if (svar["eko_privat_blandning"] === "ja") risksankande.push("Tydlig separation privat/företag");
+
+  // Kundrelation (fråga 3 + 5)
+  if (svar["kund_fysiskt_mote"] === "ja") risksankande.push("Fysiskt möte genomfört vid kundupptag");
+  if (svar["kund_distans"] === "ja") riskhojande.push("All kontakt sker på distans");
+  if (svar["kund_bokforing"] === "ja") tjanster.push("löpande bokföring");
+  if (svar["kund_lon"] === "ja") tjanster.push("lönehantering");
+  if (svar["kund_arsredovisning"] === "ja") tjanster.push("årsredovisning");
+  if (svar["kund_deklaration"] === "ja") tjanster.push("deklaration");
+  if (svar["kund_radgivning"] === "ja") tjanster.push("rådgivning");
+
+  // Beräkna justerad risknivå baserat på svar
+  let riskScore = 0;
+  riskScore += riskhojande.length * 1;
+  riskScore -= risksankande.length * 0.5;
+  
+  const nivaer: Riskniva[] = ["Låg risk", "Normal risk", "Förhöjd risk", "Hög risk"];
+  const basIndex = nivaer.indexOf(baseReport.riskniva);
+  const justerat = Math.min(3, Math.max(0, basIndex + Math.round(riskScore / 2)));
+  const slutligRisk = nivaer[justerat];
+
+  // Anpassa sektionerna med svaren
+  const sections = baseReport.sections.map((section) => {
+    let text = section.text;
+
+    if (section.id === 1 && (riskhojande.length > 0 || risksankande.length > 0)) {
+      const tillagg: string[] = [];
+      if (riskhojande.length > 0) {
+        tillagg.push(`Vid byråns kontroll har följande riskhöjande faktorer bekräftats: ${riskhojande.join("; ")}.`);
+      }
+      if (risksankande.length > 0) {
+        tillagg.push(`Följande risksänkande faktorer har bekräftats: ${risksankande.join("; ")}.`);
+      }
+      text += " " + tillagg.join(" ");
+    }
+
+    if (section.id === 2) {
+      const ekoFaktorer: string[] = [];
+      if (svar["eko_omsattning_rimlig"] === "ja") ekoFaktorer.push("Omsättningen har bedömts som rimlig i förhållande till branschnorm.");
+      if (svar["eko_omsattning_rimlig"] === "nej") ekoFaktorer.push("Omsättningen har inte rimlighetsbedömts — detta bör genomföras.");
+      if (svar["eko_avvikande_transaktioner"] === "ja") ekoFaktorer.push("Avvikande transaktionsmönster har observerats och bör utredas vidare.");
+      if (svar["eko_osanna_fakturor"] === "ja") ekoFaktorer.push("Risk för osanna fakturor har identifierats.");
+      if (svar["eko_laneforhalland"] === "ja") ekoFaktorer.push("Ovanliga lån eller finansieringskällor har noterats.");
+      if (ekoFaktorer.length > 0) text += " " + ekoFaktorer.join(" ");
+    }
+
+    if (section.id === 3 && tjanster.length > 0) {
+      text = `${company.bolagsnamn} anlitar Bokföringstjänst i Öjebyn AB för ${tjanster.join(", ")}. Kundrelationen förväntas vara löpande med månatlig eller kvartalsvis leverans anpassad efter bolagets verksamhetsvolym.`;
+    }
+
+    if (section.id === 4 && bekraftelser.length > 0) {
+      text += ` Genomförda kontroller vid kundupptag: ${bekraftelser.join("; ")}.`;
+      if (svar["id_pep_positiv"] === "ja") {
+        text += " PEP-exponering bekräftad — skärpta åtgärder tillämpas enligt 3 kap. 10–14 §§ PTL.";
+      }
+      if (svar["id_hogriskland"] === "ja") {
+        text += " Koppling till högrisktredjeland bekräftad — skärpta åtgärder tillämpas enligt 3 kap. 11 § PTL.";
+      }
+    }
+
+    if (section.id === 5) {
+      if (svar["kund_fysiskt_mote"] === "ja") {
+        text += " Fysiskt möte har genomförts vid kundupptag, vilket sänker risken kopplad till distansrelationer.";
+      }
+      if (svar["kund_distans"] === "ja") {
+        text += " All kontakt sker på distans utan fysiskt möte, vilket innebär förhöjd risk enligt 2 kap. 5 § p. 9 PTL. Byrån bör överväga kompletterande identifieringsåtgärder.";
+      }
+    }
+
+    if (section.id === 6) {
+      const alla: string[] = [...riskhojande, ...risksankande.map(s => `(sänkande) ${s}`)];
+      text = `${company.bolagsnamn} bedöms sammantaget innebära ${slutligRisk.toLowerCase()}. Bedömningen baseras på branschrisk, bolagsspecifika faktorer (ålder, storlek, juridisk form) samt byråns kontroll vid kundupptag.`;
+      if (alla.length > 0) {
+        text += ` Identifierade faktorer: ${alla.join("; ")}.`;
+      }
+      if (slutligRisk === "Hög risk" || slutligRisk === "Förhöjd risk") {
+        text += " Skärpta åtgärder enligt 3 kap. 7–8 §§ PTL ska tillämpas, inklusive tätare uppföljning och utökad dokumentation.";
+      }
+      const uppfoljning = slutligRisk === "Hög risk" ? "6" : slutligRisk === "Förhöjd risk" ? "9" : "12";
+      text += ` Kundkännedom bör omprövas inom ${uppfoljning} månader.`;
+    }
+
+    return { ...section, text };
+  });
+
+  return {
+    ...baseReport,
+    riskniva: slutligRisk,
+    sections,
+    riskfaktorer: [...riskhojande, ...baseReport.riskfaktorer],
+  };
+}
+
 export async function buildGeneriskBranschrapport(sniKod: string) {
   const { mall, mallSections, bedomningsdatum } = buildSections(sniKod);
 
