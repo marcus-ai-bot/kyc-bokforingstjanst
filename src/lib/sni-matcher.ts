@@ -1,7 +1,16 @@
 import { branschmallar, type Branschmall } from "@/data/branschmallar";
 
 function normalizeSniKod(value: string) {
-  return value.replace(/\s+/g, "").trim().toLowerCase();
+  // Strip whitespace
+  let v = value.replace(/\s+/g, "").trim().toLowerCase();
+  
+  // If no dot and length >= 4, insert dot after first 2 digits
+  // e.g. "56110" → "56.110", "96021" → "96.021", "43210" → "43.210"
+  if (!v.includes(".") && /^\d{4,}$/.test(v)) {
+    v = v.slice(0, 2) + "." + v.slice(2);
+  }
+  
+  return v;
 }
 
 function matchScore(input: string, pattern: string) {
