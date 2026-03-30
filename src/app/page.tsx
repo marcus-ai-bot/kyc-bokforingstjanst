@@ -17,6 +17,12 @@ export default function Home() {
               eller behandla kundlista via CSV och Excel. Samma mallar,
               risknivåer och PDF-export används i hela flödet.
             </p>
+            <a
+              href="/kyc"
+              className="mt-6 inline-flex border border-[#2d5aa0] bg-[#2d5aa0] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#244a83]"
+            >
+              Interaktiv KYC-arbetsyta →
+            </a>
           </div>
         </section>
         <UploadDashboard />
