@@ -168,7 +168,7 @@ Avsluta med en RISKNIVÅ (exakt en av: "Låg risk", "Normal risk", "Förhöjd ri
    Beskriv hur kommunikation och leverans sker. Fysiskt möte eller distans? Geografiskt avstånd?
 
 6. **Motiverad samlad risknivå** (2 kap. 3 § samt 3 kap. 1 § PTL)
-   Motivera den samlade risknivån. Knyt samman alla faktorer. Ange konkret uppföljningsintervall.
+   Motivera den samlade risknivån. Knyt samman alla faktorer. Omprövning sker ALLTID inom 12 månader (aldrig kortare intervall).
 
 ## SVARSFORMAT
 

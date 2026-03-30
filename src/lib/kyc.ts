@@ -191,7 +191,7 @@ function buildDynamicSections(company: ScbCompany, analys: BolagRiskAnalys): Kyc
       id: 6,
       title: "Motiverad samlad risknivå",
       lagrum: "2 kap. 3 § samt 3 kap. 1 § PTL",
-      text: `${namn} bedöms sammantaget innebära ${samladRisk.toLowerCase()}. Bedömningen baseras på verksamhetens karaktär (${b}), bolagets storlek (${storlek}), juridisk form (${company.juridiskForm}), ålder (reg. ${company.registreringsdatum}) och ägarkategori (${company.agarkategori || "ej angiven"}).${flaggor.length > 0 ? " Identifierade riskfaktorer: " + flaggor.join(", ") + "." : ""} Byrån tillämpar grundläggande kundkännedom. Omprövning ska ske inom ${samladRisk === "Hög risk" ? "6" : samladRisk === "Förhöjd risk" ? "9" : "12"} månader. Om förhöjande omständigheter identifieras ska risknivån omprövas och skärpta åtgärder vidtas enligt 3 kap. 7–8 §§ PTL.`,
+      text: `${namn} bedöms sammantaget innebära ${samladRisk.toLowerCase()}. Bedömningen baseras på verksamhetens karaktär (${b}), bolagets storlek (${storlek}), juridisk form (${company.juridiskForm}), ålder (reg. ${company.registreringsdatum}) och ägarkategori (${company.agarkategori || "ej angiven"}).${flaggor.length > 0 ? " Identifierade riskfaktorer: " + flaggor.join(", ") + "." : ""} Byrån tillämpar grundläggande kundkännedom. Omprövning ska ske inom 12 månader. Om förhöjande omständigheter identifieras ska risknivån omprövas och skärpta åtgärder vidtas enligt 3 kap. 7–8 §§ PTL.`,
     },
   ];
 }
@@ -419,8 +419,7 @@ export async function buildKycReportWithChecklist(
       if (slutligRisk === "Hög risk" || slutligRisk === "Förhöjd risk") {
         text += " Skärpta åtgärder enligt 3 kap. 7–8 §§ PTL ska tillämpas, inklusive tätare uppföljning och utökad dokumentation.";
       }
-      const uppfoljning = slutligRisk === "Hög risk" ? "6" : slutligRisk === "Förhöjd risk" ? "9" : "12";
-      text += ` Kundkännedom bör omprövas inom ${uppfoljning} månader.`;
+      text += " Kundkännedom bör omprövas inom 12 månader.";
     }
 
     return { ...section, text };

@@ -421,7 +421,7 @@ export function byggChecklista(company: ScbCompany): CheckCategory[] {
       {
         id: "lop_uppfoljning_12mnd",
         text: "Kundkännedom planeras att omprövas inom 12 månader",
-        hjalptext: "Hög risk: 6 månader. Normal/Låg: 12 månader.",
+        hjalptext: "Omprövning sker alltid i intervaller om 12 månader.",
         riskPaverkan: "neutral",
         riskVikt: 0,
         lagrum: "2 kap. 3 § tredje stycket PTL",
